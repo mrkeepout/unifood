@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		601C2AF92E0B3EA500D41A1C /* MapaMarmiteiros.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601C2AF52E0B3EA500D41A1C /* MapaMarmiteiros.swift */; };
+		601C2AFA2E0B3EA500D41A1C /* InformacoesMarmiteiros.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601C2AF62E0B3EA500D41A1C /* InformacoesMarmiteiros.swift */; };
+		601C2AFC2E0B3EA500D41A1C /* ListaMarmiteiros.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601C2AF82E0B3EA500D41A1C /* ListaMarmiteiros.swift */; };
+		601C2AFE2E0B3FDE00D41A1C /* Cardapio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601C2AFD2E0B3FDE00D41A1C /* Cardapio.swift */; };
 		60A3675D2E09CEA4003C72BB /* UnifoodApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A3675C2E09CEA4003C72BB /* UnifoodApp.swift */; };
 		60A3675F2E09CEA4003C72BB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A3675E2E09CEA4003C72BB /* ContentView.swift */; };
 		60A367612E09CEA5003C72BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60A367602E09CEA5003C72BB /* Assets.xcassets */; };
@@ -15,6 +19,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		601C2AF52E0B3EA500D41A1C /* MapaMarmiteiros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapaMarmiteiros.swift; sourceTree = "<group>"; };
+		601C2AF62E0B3EA500D41A1C /* InformacoesMarmiteiros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformacoesMarmiteiros.swift; sourceTree = "<group>"; };
+		601C2AF82E0B3EA500D41A1C /* ListaMarmiteiros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListaMarmiteiros.swift; sourceTree = "<group>"; };
+		601C2AFD2E0B3FDE00D41A1C /* Cardapio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardapio.swift; sourceTree = "<group>"; };
 		60A367592E09CEA4003C72BB /* Unifood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unifood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60A3675C2E09CEA4003C72BB /* UnifoodApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifoodApp.swift; sourceTree = "<group>"; };
 		60A3675E2E09CEA4003C72BB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -56,6 +64,10 @@
 				60A3675C2E09CEA4003C72BB /* UnifoodApp.swift */,
 				60A3675E2E09CEA4003C72BB /* ContentView.swift */,
 				60A3676A2E09D765003C72BB /* TelaInicial.swift */,
+				601C2AF62E0B3EA500D41A1C /* InformacoesMarmiteiros.swift */,
+				601C2AF82E0B3EA500D41A1C /* ListaMarmiteiros.swift */,
+				601C2AF52E0B3EA500D41A1C /* MapaMarmiteiros.swift */,
+				601C2AFD2E0B3FDE00D41A1C /* Cardapio.swift */,
 				60A367602E09CEA5003C72BB /* Assets.xcassets */,
 				60A367622E09CEA5003C72BB /* Preview Content */,
 			);
@@ -140,9 +152,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				601C2AFC2E0B3EA500D41A1C /* ListaMarmiteiros.swift in Sources */,
 				60A3676B2E09D765003C72BB /* TelaInicial.swift in Sources */,
 				60A3675F2E09CEA4003C72BB /* ContentView.swift in Sources */,
 				60A3675D2E09CEA4003C72BB /* UnifoodApp.swift in Sources */,
+				601C2AFE2E0B3FDE00D41A1C /* Cardapio.swift in Sources */,
+				601C2AFA2E0B3EA500D41A1C /* InformacoesMarmiteiros.swift in Sources */,
+				601C2AF92E0B3EA500D41A1C /* MapaMarmiteiros.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
