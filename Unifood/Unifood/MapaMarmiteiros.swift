@@ -129,9 +129,19 @@ struct MapaMarmiteiros: View {
             guard let response = response else {
                 print("Erro na pesquisa: \(error?.localizedDescription ?? "Desconhecido")")
                 self.searchResults = []
+                self.selectedSearchItem = nil
                 return
             }
-            self.searchResults = response.mapItems
+            
+            if let firstResult = response.mapItems.first {
+                self.selectedSearchItem = firstResult
+                self.zoomToLocation(firstResult.placemark.coordinate)
+                self.searchResults = []
+                self.searchText = firstResult.name ?? ""
+            } else {
+                self.searchResults = []
+                self.selectedSearchItem = nil
+            }
         }
     }
     
