@@ -9,7 +9,6 @@ struct InicioView: View {
                 Image("mulher")
                     .resizable()
                     .ignoresSafeArea()
-
                 VStack {
                     HStack {
                         Image("logo")
@@ -47,6 +46,18 @@ struct InicioView: View {
                     }
 
                     Spacer(minLength: 40)
+                    NavigationLink(
+                        destination: ContentView(),
+                        tag: 1,
+                        selection: $action
+                    ) { EmptyView() }
+                    Button(action: {
+                        action = 1
+                    }) {
+                        Text("+ Adicionar Restaurante")
+                            .font(.headline)
+
+                    }
                 }
             }
         }

@@ -34,7 +34,7 @@ struct LogoView: View {
                     }
                 }
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    DispatchQueue.main.asyncAfter(deadline: .now()+0.8) {
                         withAnimation {
                             isActive = true
                         }

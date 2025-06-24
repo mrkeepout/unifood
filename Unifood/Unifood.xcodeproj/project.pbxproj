@@ -13,6 +13,10 @@
 		60A367642E09CEA5003C72BB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60A367632E09CEA5003C72BB /* Preview Assets.xcassets */; };
 		C01EAD7A2E0B2127007A31ED /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01EAD792E0B2127007A31ED /* LogoView.swift */; };
 		C01EAD7C2E0B2D77007A31ED /* ListaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01EAD7B2E0B2D77007A31ED /* ListaView.swift */; };
+		C01EAD812E0B4433007A31ED /* InformacoesMarmiteiros.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01EAD7D2E0B4433007A31ED /* InformacoesMarmiteiros.swift */; };
+		C01EAD822E0B4433007A31ED /* MapaMarmiteiros.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01EAD7E2E0B4433007A31ED /* MapaMarmiteiros.swift */; };
+		C01EAD832E0B4433007A31ED /* TelaInicial.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01EAD7F2E0B4433007A31ED /* TelaInicial.swift */; };
+		C01EAD842E0B4433007A31ED /* ListaMarmiteiros.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01EAD802E0B4433007A31ED /* ListaMarmiteiros.swift */; };
 		C08654B32E09DB3600032A78 /* InicioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08654B22E09DB3600032A78 /* InicioView.swift */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +28,10 @@
 		60A367632E09CEA5003C72BB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C01EAD792E0B2127007A31ED /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		C01EAD7B2E0B2D77007A31ED /* ListaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListaView.swift; sourceTree = "<group>"; };
+		C01EAD7D2E0B4433007A31ED /* InformacoesMarmiteiros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformacoesMarmiteiros.swift; sourceTree = "<group>"; };
+		C01EAD7E2E0B4433007A31ED /* MapaMarmiteiros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapaMarmiteiros.swift; sourceTree = "<group>"; };
+		C01EAD7F2E0B4433007A31ED /* TelaInicial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelaInicial.swift; sourceTree = "<group>"; };
+		C01EAD802E0B4433007A31ED /* ListaMarmiteiros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListaMarmiteiros.swift; sourceTree = "<group>"; };
 		C08654B22E09DB3600032A78 /* InicioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InicioView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,6 +65,10 @@
 		60A3675B2E09CEA4003C72BB /* Unifood */ = {
 			isa = PBXGroup;
 			children = (
+				C01EAD7D2E0B4433007A31ED /* InformacoesMarmiteiros.swift */,
+				C01EAD802E0B4433007A31ED /* ListaMarmiteiros.swift */,
+				C01EAD7E2E0B4433007A31ED /* MapaMarmiteiros.swift */,
+				C01EAD7F2E0B4433007A31ED /* TelaInicial.swift */,
 				C01EAD7B2E0B2D77007A31ED /* ListaView.swift */,
 				C01EAD792E0B2127007A31ED /* LogoView.swift */,
 				60A3675C2E09CEA4003C72BB /* UnifoodApp.swift */,
@@ -149,7 +161,11 @@
 				C01EAD7C2E0B2D77007A31ED /* ListaView.swift in Sources */,
 				60A3675F2E09CEA4003C72BB /* ContentView.swift in Sources */,
 				C01EAD7A2E0B2127007A31ED /* LogoView.swift in Sources */,
+				C01EAD832E0B4433007A31ED /* TelaInicial.swift in Sources */,
+				C01EAD812E0B4433007A31ED /* InformacoesMarmiteiros.swift in Sources */,
+				C01EAD842E0B4433007A31ED /* ListaMarmiteiros.swift in Sources */,
 				60A3675D2E09CEA4003C72BB /* UnifoodApp.swift in Sources */,
+				C01EAD822E0B4433007A31ED /* MapaMarmiteiros.swift in Sources */,
 				C08654B32E09DB3600032A78 /* InicioView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
