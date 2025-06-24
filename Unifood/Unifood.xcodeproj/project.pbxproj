@@ -11,6 +11,7 @@
 		60A3675F2E09CEA4003C72BB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A3675E2E09CEA4003C72BB /* ContentView.swift */; };
 		60A367612E09CEA5003C72BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60A367602E09CEA5003C72BB /* Assets.xcassets */; };
 		60A367642E09CEA5003C72BB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60A367632E09CEA5003C72BB /* Preview Assets.xcassets */; };
+		60A3676B2E09D765003C72BB /* TelaInicial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A3676A2E09D765003C72BB /* TelaInicial.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		60A3675E2E09CEA4003C72BB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		60A367602E09CEA5003C72BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		60A367632E09CEA5003C72BB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		60A3676A2E09D765003C72BB /* TelaInicial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelaInicial.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				60A3675C2E09CEA4003C72BB /* UnifoodApp.swift */,
 				60A3675E2E09CEA4003C72BB /* ContentView.swift */,
+				60A3676A2E09D765003C72BB /* TelaInicial.swift */,
 				60A367602E09CEA5003C72BB /* Assets.xcassets */,
 				60A367622E09CEA5003C72BB /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60A3676B2E09D765003C72BB /* TelaInicial.swift in Sources */,
 				60A3675F2E09CEA4003C72BB /* ContentView.swift in Sources */,
 				60A3675D2E09CEA4003C72BB /* UnifoodApp.swift in Sources */,
 			);
