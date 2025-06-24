@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TesteView: View {
+struct InicioView: View {
     var body: some View {
         ZStack{
             Image("mulher")
@@ -18,17 +18,22 @@ struct TesteView: View {
                     Image("logo")
                     Spacer()
                 }
-                Text("Descubra a marmita mais próxima, disponibilidade, cárdapio e muito mais!")
+                Text("Descubra a marmita mais\n próxima, disponibilidade,\n cárdapio e muito mais!")
+                    .font(.system(size: 20, weight: .bold, design: .default))
                     .foregroundStyle(.white)
                 Spacer()
-                Text("Sua comida de forma rápida e fácil")
+                Text("Sua comida\n de forma rápida\n e fácil")
                     .foregroundStyle(.white)
+                    .font(.system(size: 32, weight: .bold, design: .default))
                 Spacer()
+//                Button(action{
+//                    /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
+//                })
             }
         }
     }
 }
 
 #Preview {
-    TesteView()
+    InicioView()
 }
