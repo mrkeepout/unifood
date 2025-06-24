@@ -1,7 +1,8 @@
 import SwiftUI
 import MapKit
 
-struct Location: Hashable {
+struct Location: Hashable, Identifiable {
+    let id = UUID()
     let nome: String
     let foto: String
     let descricao: String
@@ -20,9 +21,10 @@ struct MapaMarmiteiros: View {
     @State private var searchText: String = ""
     @State private var searchResults: [MKMapItem] = []
     @State private var selectedSearchItem: MKMapItem? = nil
+    @State private var localSelecionado: Location? = nil
     
     var locais = [
-        Location(nome: "Cristo Redentor", foto: "https://s4.static.brasilescola.uol.com.br/be/2024/05/cristo-redentor.jpg", descricao: "Localizado no topo do Morro do Corcovado, no Rio de Janeiro, o Cristo Redentor é uma icônica estátua de Jesus Cristo com os braços abertos, simbolizando a paz e a acolhida.", latitude: -22.951916, longitude: -43.210466)
+        Location(nome: "Restaurante Universitário", foto: "ru_foto", descricao: "O Restaurante Universitário da UnB oferece refeições a preços acessíveis para a comunidade acadêmica.", latitude: -15.76408, longitude: -47.87047)
     ]
     
     var body: some View {
@@ -39,7 +41,10 @@ struct MapaMarmiteiros: View {
                                     .fill(Color("cima", bundle: nil))
                                     .frame(width: 30, height: 30)
                                 Image(systemName: "mappin.and.ellipse")
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Color("base"))
+                            }
+                            .onTapGesture {
+                                localSelecionado = local
                             }
                         }
                     }
@@ -53,26 +58,36 @@ struct MapaMarmiteiros: View {
                 }
                 .ignoresSafeArea()
                 
-                VStack(spacing: 30) {
+                VStack(spacing: 20) {
                     Spacer()
-                    TextField("Pesquisar", text: $searchText)
-                        .padding(10)
-                        .background(Color(.systemGray6))
-                        .cornerRadius(8)
-                        .padding(.horizontal)
-                        .shadow(radius: 5)
-                        .onSubmit {
-                            performSearch()
+                        TextField("Pesquisar", text: $searchText)
+                            .font(.headline)
+                            .padding(10)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(8)
+                            .padding(.horizontal, 25)
+                            .shadow(radius: 10)
+                            .frame(height: 0)
+                            .onSubmit {
+                                performSearch()
+                            }
+                        Button(action: {}){
+                            Text("Exibir Lista")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 15)
+                                .padding(.vertical, -7)
                         }
-                    Button("Exibir Lista"){
-                        
-                    }
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    if !searchResults.isEmpty && searchText != "" {
+                        .padding()
+                        .background(Color("base"))
+                        .cornerRadius(10)
+                        .frame(width: 400, height: 80)
+                        Spacer()
+                        Spacer()
+                        Spacer()
+                        Spacer()
+                    
+                    if !searchResults.isEmpty {
                         List(searchResults, id: \.self) { item in
                             VStack(alignment: .leading) {
                                 Text(item.name ?? "Local Desconhecido")
@@ -89,15 +104,18 @@ struct MapaMarmiteiros: View {
                                 searchText = item.name ?? ""
                             }
                         }
-                        .frame(height: min(CGFloat(searchResults.count) * 50, 200))
+                        .frame(height: min(CGFloat(searchResults.count) * 60, 240))
                         .listStyle(.plain)
-                        .padding(.horizontal)
-                        .background(Color.white)
-                        .cornerRadius(8)
+                        .background(Color(.systemBackground))
+                        .cornerRadius(10)
                         .shadow(radius: 5)
                     }
                 }
-                .padding(.top, 10)
+                .padding()
+            }
+            .sheet(item: $localSelecionado) { local in
+                InformacoesMarmiteiros(local: local)
+                    .presentationDetents([.fraction(0.85), .large])
             }
         }
     }
@@ -110,19 +128,10 @@ struct MapaMarmiteiros: View {
         search.start { response, error in
             guard let response = response else {
                 print("Erro na pesquisa: \(error?.localizedDescription ?? "Desconhecido")")
-                searchResults = []
-                selectedSearchItem = nil
+                self.searchResults = []
                 return
             }
-            searchResults = response.mapItems
-            if let firstResult = response.mapItems.first {
-                selectedSearchItem = firstResult
-                zoomToLocation(firstResult.placemark.coordinate)
-                searchResults = []
-                searchText = firstResult.name ?? ""
-            } else {
-                selectedSearchItem = nil
-            }
+            self.searchResults = response.mapItems
         }
     }
     
@@ -139,3 +148,4 @@ struct MapaMarmiteiros: View {
 #Preview {
     MapaMarmiteiros()
 }
+
