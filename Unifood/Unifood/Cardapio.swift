@@ -1,43 +1,5 @@
 import SwiftUI
 
-// --- Modelos de Dados ---
-
-// Estrutura para um item do menu
-struct MenuItem: Identifiable {
-    let id = UUID()
-    let name: String
-    let variations: String
-    let description: String
-    let price: Double
-    let availableCount: Int
-    let imageName: String // Usaremos SF Symbols como placeholders
-}
-
-// Estrutura para uma avaliação
-struct Review: Identifiable {
-    let id = UUID()
-    let userName: String
-    let userDepartment: String
-    let reviewText: String
-    let userImageName: String // Placeholder para a foto do usuário
-}
-
-
-// --- Dados de Exemplo ---
-struct DadosExemplo {
-    static let menuItems = [
-        MenuItem(name: "Tacos", variations: "Carne/Frango/Queijo", description: "Um sabor tão espetacular que você irá gritar Arriba!", price: 14.00, availableCount: 8, imageName: "taco"),
-        MenuItem(name: "Pozole", variations: "Branco/Verde", description: "A Hueso! Delícia com tudo que há de bom e mais um pouco.", price: 15.00, availableCount: 2, imageName: "bowl")
-    ]
-    
-    static let reviews = [
-        Review(userName: "DisneiLandia S.", userDepartment: "Arquivologia", reviewText: "Um dos melhores marmiteiros da UnB, podem confiar!", userImageName: "person.crop.circle.fill.badge.checkmark"),
-        Review(userName: "Free Willie", userDepartment: "Física", reviewText: "Um do marmiteiros que podem.", userImageName: "person.crop.circle.fill")
-    ]
-    
-    static let filters = ["Todos", "Marmitas", "Sobremesas"]
-}
-
 // --- Tela de Detalhes do Restaurante ---
 struct RestaurantDetailView: View {
     @State private var selectedFilter: String = "Marmitas"

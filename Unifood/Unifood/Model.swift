@@ -1,0 +1,152 @@
+import Foundation
+
+// MARK: - Modelo para a lista de restaurantes (Endpoint /restaurantes)
+
+/// Representa um restaurante na lista principal. É uma versão resumida dos dados.
+struct Restaurantes: Codable, Identifiable {
+    let id: String
+    let nome: String
+    let imagemIcone: String
+    let corFundoIcone: String
+    let notaMedia: Double
+    let totalAvaliacoes: Int
+    let distanciaMetros: Int? // Opcional, caso não esteja disponível
+
+    // Mapeia os nomes do JSON (snake_case) para os nomes em Swift (camelCase)
+    enum CodingKeys: String, CodingKey {
+        case id, nome
+        case imagemIcone = "imagem_icone"
+        case corFundoIcone = "cor_fundo_icone"
+        case notaMedia = "nota_media"
+        case totalAvaliacoes = "total_avaliacoes"
+        case distanciaMetros = "distancia_metros"
+    }
+}
+
+
+// MARK: - Modelo para os detalhes de um restaurante (Endpoint /restaurantes/{id})
+
+/// Representa todos os detalhes de um restaurante, incluindo cardápio e avaliações.
+struct RestauranteDetalhado: Codable, Identifiable {
+    let id: String
+    let nome: String
+    let cardapio: [MenuItem]
+    let avaliacoes: [Review]
+    
+    // Você pode adicionar outros campos que venham neste endpoint aqui.
+}
+
+// MARK: - Modelos de teste de tela
+
+// --- Modelos de Dados ---
+
+// Estrutura para um item do menu
+struct MenuItem: Codable, Identifiable {
+    var id = UUID()
+    let name: String
+    let variations: String
+    let description: String
+    let price: Double
+    let availableCount: Int
+    let imageName: String // Usaremos SF Symbols como placeholders
+}
+ 
+// Estrutura para uma avaliação
+struct Review: Codable, Identifiable {
+    let id = UUID()
+    let userName: String
+    let userDepartment: String
+    let reviewText: String
+    let userImageName: String // Placeholder para a foto do usuário
+}
+
+// --- Dados de Exemplo ---
+struct DadosExemplo {
+    static let menuItems = [
+        MenuItem(name: "Tacos", variations: "Carne/Frango/Queijo", description: "Um sabor tão espetacular que você irá gritar Arriba!", price: 14.00, availableCount: 8, imageName: "taco"),
+        MenuItem(name: "Pozole", variations: "Branco/Verde", description: "A Hueso! Delícia com tudo que há de bom e mais um pouco.", price: 15.00, availableCount: 2, imageName: "bowl")
+    ]
+    
+    static let reviews = [
+        Review(userName: "DisneiLandia S.", userDepartment: "Arquivologia", reviewText: "Um dos melhores marmiteiros da UnB, podem confiar!", userImageName: "person.crop.circle.fill.badge.checkmark"),
+        Review(userName: "Free Willie", userDepartment: "Física", reviewText: "Um do marmiteiros que podem.", userImageName: "person.crop.circle.fill")
+    ]
+
+    static let filters = ["Todos", "Marmitas", "Sobremesas"]
+}
+
+/*// MARK: - Modelos Aninhados
+
+/// Representa um item do cardápio de um restaurante.
+struct MenuItem: Codable, Identifiable {
+    // Usaremos idItem como a propriedade para 'Identifiable'
+    var id: String { idItem }
+    
+    let idItem: String
+    let nome: String
+    let imagemPrato: String
+    let variacoes: String
+    let descricao: String
+    let preco: Double
+    let quantidadeDisponivel: Int
+
+    enum CodingKeys: String, CodingKey {
+        case idItem = "id_item"
+        case nome
+        case imagemPrato = "imagem_prato"
+        case variacoes, descricao, preco
+        case quantidadeDisponivel = "quantidade_disponivel"
+    }
+}
+
+/// Representa uma avaliação feita por um usuário.
+struct Review: Codable, Identifiable {
+    // Usaremos idAvaliacao como a propriedade para 'Identifiable'
+    var id: String { idAvaliacao }
+    
+    let idAvaliacao: String
+    let nomeUsuario: String
+    let departamentoUsuario: String
+    let textoAvaliacao: String
+    let imagemUsuario: String
+
+    enum CodingKeys: String, CodingKey {
+        case idAvaliacao = "id_avaliacao"
+        case nomeUsuario = "nome_usuario"
+        case departamentoUsuario = "departamento_usuario"
+        case textoAvaliacao = "texto_avaliacao"
+        case imagemUsuario = "imagem_usuario"
+    }
+}
+*/
+// MARK: - Modelos para Criação de Dados (POST)
+
+/// Estrutura usada para enviar dados para criar um novo restaurante.
+struct NovoRestaurantePayload: Codable {
+    let nome: String
+    let imagemIcone: String
+    let corFundoIcone: String
+    
+    enum CodingKeys: String, CodingKey {
+        case nome
+        case imagemIcone = "imagem_icone"
+        case corFundoIcone = "cor_fundo_icone"
+    }
+}
+
+/// Estrutura usada para enviar dados para adicionar um novo item ao cardápio.
+struct NovoMenuItemPayload: Codable {
+    let nome: String
+    let imagemPrato: String
+    let variacoes: String
+    let descricao: String
+    let preco: Double
+    let quantidadeDisponivel: Int
+
+    enum CodingKeys: String, CodingKey {
+        case nome
+        case imagemPrato = "imagem_prato"
+        case variacoes, descricao, preco
+        case quantidadeDisponivel = "quantidade_disponivel"
+    }
+}
