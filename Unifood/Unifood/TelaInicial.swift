@@ -39,7 +39,6 @@ struct TelaInicial: View {
 }
 
 
-
 // --- Componentes da Tela Inicial ---
 
 // Seção 2: Marmitas mais próximas (Mapa) - AGORA É UM NAVIGATIONLINK
