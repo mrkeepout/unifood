@@ -21,14 +21,13 @@ struct ListaView: View {
                     .scaledToFit()
                     .frame(width: 60, height: 60)
                 
-                
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Restaurante Verde")
                         .font(.headline)
                         .foregroundColor(.black)
                     
                     Text("Comida Vegana")
-                        .font(.caption) 
+                        .font(.caption)
                         .foregroundColor(.gray)
                 }
                 .padding(.vertical, 8)
