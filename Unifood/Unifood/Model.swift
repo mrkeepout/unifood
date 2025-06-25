@@ -1,4 +1,37 @@
 import Foundation
+import SwiftUI
+
+// MARK: - Modelo para a tela inicial
+
+struct FavoriteRestaurant: Identifiable {
+    let id = UUID()
+    let name: String
+    let iconName: String
+    let iconBgColor: Color
+    let rating: Double
+    let reviewCount: Int
+    let distance: Int
+}
+
+struct NewsItem: Identifiable {
+    let id = UUID()
+    let title: String
+    let imageName: String
+}
+
+struct MockData {
+    static let favoriteRestaurants = [
+        FavoriteRestaurant(name: "Sabor Mexicano", iconName: "face.smiling.inverse", iconBgColor: .red, rating: 4.8, reviewCount: 47, distance: 350),
+        FavoriteRestaurant(name: "Tendinha", iconName: "hamburger.fill", iconBgColor: .orange, rating: 4.7, reviewCount: 86, distance: 500)
+    ]
+    
+    static let newsItems = [
+        NewsItem(title: "Descubra os novos pratos da semana", imageName: "plate.fill")
+    ]
+}
+
+
+
 
 // MARK: - Modelo para a lista de restaurantes (Endpoint /restaurantes)
 

@@ -115,9 +115,12 @@ struct MapaMarmiteiros: View {
             }
             .sheet(item: $localSelecionado) { local in
                 InformacoesMarmiteiros(local: local)
-                    .presentationDetents([.fraction(0.85), .large])
+                    .presentationDetents([.fraction(4.85), .large])
             }
         }
+        
+        .navigationTitle("Marmitas Próximas")
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     func performSearch() {
