@@ -5,16 +5,14 @@
 //  Created by Turma02-2 on 24/06/25.
 //
 
-
 import SwiftUI
 
 struct Estoque: View {
-    @State private var nomeEstabelecimento: String = ""
-    @State private var itensDoMenu: [String] = []
-
-    @Environment(\.dismiss) var dismiss
-
-    private let menuItemsKey = "savedMenuItems"
+    @State private var nomePrato: String = ""
+    @State private var quantidade: String = ""
+    @State private var valorPrato: String = ""
+    @State private var descricaoPrato: String = ""
+    @State private var mostrarConfirmacao = false
 
     var body: some View {
         ZStack {
@@ -22,97 +20,101 @@ struct Estoque: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("Adicione o seu Menu")
-                        .font(.title3)
+                    
+                    Text("Adicionar Novo Prato")
+                        .font(.largeTitle)
                         .fontWeight(.bold)
-                        .padding(.bottom, 10)
+                        .padding(.bottom, 20)
 
-                    ForEach(itensDoMenu.indices, id: \.self) { index in
-                        HStack {
-                            TextField("Escreva aqui...", text: $itensDoMenu[index])
-                                .font(.headline)
-                                .padding()
-                                .background(Color.white)
-                                .cornerRadius(10)
-                                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-                                .onChange(of: itensDoMenu[index]) { _ in
-                                    saveMenuItems()
-                                }
-
-                            Button(action: {
-                                itensDoMenu.remove(at: index)
-                                if itensDoMenu.isEmpty {
-                                    itensDoMenu.append("")
-                                }
-                                saveMenuItems()
-                            }) {
-                                Image(systemName: "minus.circle.fill")
-                                    .foregroundColor(.red)
-                                    .font(.title2)
-                            }
-                        }
-                    }
-
-                    Button(action: {
-                        itensDoMenu.append("")
-                        saveMenuItems()                     }) {
-                        HStack {
-                            Image(systemName: "plus.circle.fill")
-                            Text("Adicionar Item")
-                        }
-                        .foregroundColor(.accentColor)
+                    
+                    Text("Qual o nome do prato?")
                         .font(.headline)
-                    }
-                    .padding(.top, 10)
+                    TextField("Ex: Bife com Fritas", text: $nomePrato)
+                        .textFieldStyle()
 
+                    Text("Qual a quantidade?")
+                        .font(.headline)
+                    TextField("Ex: 15 unidades", text: $quantidade)
+                        .textFieldStyle()
+                        .keyboardType(.numberPad)
+
+                    Text("Qual o valor desse prato? (R$)")
+                        .font(.headline)
+                    TextField("Ex: 29,90", text: $valorPrato)
+                        .textFieldStyle()
+                        .keyboardType(.decimalPad)
+
+                    Text("Escreva uma descrição do seu prato:")
+                        .font(.headline)
+
+                    TextField("Ex: Acompanha arroz, feijão e uma pequena salada.", text: $descricaoPrato, axis: .vertical)
+                        .textFieldStyle()
+                    
                     Spacer()
 
+                    
+                    if mostrarConfirmacao {
+                        Text("✅ Prato adicionado com sucesso!")
+                            .foregroundColor(.green)
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding()
+                            .transition(.opacity.animation(.easeIn))
+                    }
+
                     Button(action: {
+                        withAnimation {
+                            mostrarConfirmacao = true
+                        }
                         
-                        saveMenuItems()
-                        print("Itens do Menu Confirmados e Salvos: \(itensDoMenu)")
-                        dismiss()
+                        nomePrato = ""
+                        quantidade = ""
+                        valorPrato = ""
+                        descricaoPrato = ""
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation {
+                                mostrarConfirmacao = false
+                            }
+                        }
+                        
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+
                     }) {
-                        Text("Confirmar")
+                        Text("Adicionar Prato ao Cardápio")
                             .font(.headline)
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.corCabecalho)
+                            .background(Color.blue)
                             .cornerRadius(15)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 15)
-                                    .stroke(Color.black, lineWidth: 2)
-                            )
                     }
-                    .padding(.top, 30)
-
+                    .padding(.top, 20)
                 }
                 .padding()
             }
-            
+            .navigationTitle("Adicionar Item")
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear(perform: loadMenuItems)        }
-    }
-
-   
-    private func saveMenuItems() {
-        UserDefaults.standard.set(itensDoMenu, forKey: menuItemsKey)
-    }
-
-    private func loadMenuItems() {
-        if let savedItems = UserDefaults.standard.stringArray(forKey: menuItemsKey) {
-            itensDoMenu = savedItems
-        } else {
-
-            if itensDoMenu.isEmpty {
-                itensDoMenu.append("")
-            }
         }
     }
 }
 
+struct CustomTextFieldStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding(12)
+            .background(Color.white)
+            .cornerRadius(10)
+            .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 1)
+    }
+}
 
+
+extension View {
+    func textFieldStyle() -> some View {
+        self.modifier(CustomTextFieldStyle())
+    }
+}
 
 
 #Preview {
