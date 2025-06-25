@@ -23,6 +23,8 @@ struct MapaMarmiteiros: View {
     @State private var selectedSearchItem: MKMapItem? = nil
     @State private var localSelecionado: Location? = nil
     
+    @State var aux = Location(nome: "Restaurante Universitário", foto: "ru_foto", descricao: "O Restaurante Universitário da UnB oferece refeições a preços acessíveis para a comunidade acadêmica.", latitude: -15.76408, longitude: -47.87047)
+    
     var locais = [
         Location(nome: "Restaurante Universitário", foto: "ru_foto", descricao: "O Restaurante Universitário da UnB oferece refeições a preços acessíveis para a comunidade acadêmica.", latitude: -15.76408, longitude: -47.87047)
     ]
@@ -45,6 +47,8 @@ struct MapaMarmiteiros: View {
                             }
                             .onTapGesture {
                                 localSelecionado = local
+                                aux = local
+                                
                             }
                         }
                     }
@@ -71,7 +75,7 @@ struct MapaMarmiteiros: View {
                             .onSubmit {
                                 performSearch()
                             }
-                        Button(action: {}){
+                    NavigationLink(destination: ListaMarmiteiros(auxRecebe: aux)){
                             Text("Exibir Lista")
                                 .font(.headline)
                                 .foregroundColor(.white)
@@ -118,7 +122,7 @@ struct MapaMarmiteiros: View {
                     .presentationDetents([.fraction(4.85), .large])
             }
         }
-        
+
         .navigationTitle("Marmitas Próximas")
         .navigationBarTitleDisplayMode(.inline)
     }
