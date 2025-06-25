@@ -1,43 +1,5 @@
 import SwiftUI
 
-// --- Modelos de Dados ---
-
-// Estrutura para um item do menu
-struct MenuItem: Identifiable {
-    let id = UUID()
-    let name: String
-    let variations: String
-    let description: String
-    let price: Double
-    let availableCount: Int
-    let imageName: String // Usaremos SF Symbols como placeholders
-}
-
-// Estrutura para uma avaliação
-struct Review: Identifiable {
-    let id = UUID()
-    let userName: String
-    let userDepartment: String
-    let reviewText: String
-    let userImageName: String // Placeholder para a foto do usuário
-}
-
-
-// --- Dados de Exemplo ---
-struct DetailMockData {
-    static let menuItems = [
-        MenuItem(name: "Tacos", variations: "Carne/Frango/Queijo", description: "Um sabor tão espetacular que você irá gritar Arriba!", price: 14.00, availableCount: 8, imageName: "taco"),
-        MenuItem(name: "Pozole", variations: "Branco/Verde", description: "A Hueso! Delícia com tudo que há de bom e mais um pouco.", price: 15.00, availableCount: 2, imageName: "bowl")
-    ]
-    
-    static let reviews = [
-        Review(userName: "Disnei Landia S.", userDepartment: "Arquivologia", reviewText: "Um dos melhores marmiteiros da UnB, podem confiar!", userImageName: "person.crop.circle.fill.badge.checkmark"),
-        Review(userName: "Free W. Fisíca", userDepartment: "Física", reviewText: "Um do marmiteiros que podem.", userImageName: "person.crop.circle.fill")
-    ]
-    
-    static let filters = ["Todos", "Marmitas", "Sobremesas"]
-}
-
 // --- Tela de Detalhes do Restaurante ---
 struct RestaurantDetailView: View {
     @State private var selectedFilter: String = "Marmitas"
@@ -48,22 +10,24 @@ struct RestaurantDetailView: View {
             Color(Color.corDeFundo).ignoresSafeArea()
 
             ScrollView(.vertical, showsIndicators: false) {
-                VStack(spacing: 24) {
+                VStack(spacing: 30) {
                     // Barra de Filtros
-                    FilterBarView(filters: DetailMockData.filters, selectedFilter: $selectedFilter)
+                    FilterBarView(filters: DadosExemplo.filters, selectedFilter: $selectedFilter)
                     
                     // Cards de Comida
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 16) {
-                            ForEach(DetailMockData.menuItems) { item in
+                        HStack(spacing: 26) {
+                            ForEach(DadosExemplo.menuItems) { item in
                                 MenuItemCardView(item: item)
                             }
                         }
                         .padding(.horizontal)
+                        .padding(.top, 90)
+                        .padding(.bottom, 25)
                     }
                     
                     // Seção de Avaliações
-                    ReviewsSection(reviews: DetailMockData.reviews)
+                    ReviewsSection(reviews: DadosExemplo.reviews)
 
                     Spacer()
                 }
@@ -107,8 +71,10 @@ struct FilterBarView: View {
         .padding(.vertical, 8)
         .background(
             Capsule().fill(Color.white)
+            
         )
         .padding(.horizontal)
+
     }
 }
 
@@ -136,10 +102,13 @@ struct MenuItemCardView: View {
                 
                 HStack(alignment: .bottom) {
                     VStack(alignment: .leading) {
-                        Text("A partir de").font(.caption).foregroundColor(.gray)
+                        Text("A partir de").font(.caption).foregroundColor(.black)
                         Text("R$ \(item.price, specifier: "%.2f")")
+                            .font(.title2)
                             .fontWeight(.bold)
-                        Text("a unidade")
+
+                        Text("a unidade").foregroundColor(.gray)
+                            
                     }
                     Spacer()
                     Button(action: { print("Ver ingredientes de \(item.name)") }) {
