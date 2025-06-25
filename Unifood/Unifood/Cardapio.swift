@@ -22,7 +22,7 @@ struct RestaurantDetailView: View {
                             }
                         }
                         .padding(.horizontal)
-                        .padding(.top, 90)
+                        .padding(.top, 10)
                         .padding(.bottom, 25)
                     }
                     
@@ -86,7 +86,7 @@ struct MenuItemCardView: View {
         ZStack(alignment: .top) {
             // Card de fundo
             VStack(alignment: .leading, spacing: 8) {
-                Spacer(minLength: 110) // Espaço para a imagem sobrepor
+                Spacer(minLength: 0) // Espaço para a imagem sobrepor
                 
                 HStack {
                     Image(systemName: "flame.fill")
@@ -128,6 +128,8 @@ struct MenuItemCardView: View {
             .cornerRadius(25)
             .shadow(color: .gray.opacity(0.2), radius: 10, y: 5)
 
+            /*
+            
             // Imagem sobreposta
             // Para imagens reais, use um AsyncImage
             // Aqui, usamos um SF Symbol como placeholder
@@ -144,6 +146,7 @@ struct MenuItemCardView: View {
                      Circle().stroke(Color.white, lineWidth: 6) // Borda para esconder a linha do card
                          .offset(y: -70)
                  )
+             */
         }
         .frame(width: 280)
     }

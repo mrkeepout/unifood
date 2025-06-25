@@ -16,6 +16,13 @@
 		60A367612E09CEA5003C72BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60A367602E09CEA5003C72BB /* Assets.xcassets */; };
 		60A367642E09CEA5003C72BB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60A367632E09CEA5003C72BB /* Preview Assets.xcassets */; };
 		60A3676B2E09D765003C72BB /* TelaInicial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A3676A2E09D765003C72BB /* TelaInicial.swift */; };
+		60AC4B642E0C7AF600F562BE /* PerfilVendendorAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AC4B5D2E0C7AF600F562BE /* PerfilVendendorAPI.swift */; };
+		60AC4B652E0C7AF600F562BE /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AC4B5E2E0C7AF600F562BE /* LogoView.swift */; };
+		60AC4B662E0C7AF600F562BE /* InicioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AC4B5F2E0C7AF600F562BE /* InicioView.swift */; };
+		60AC4B672E0C7AF600F562BE /* Perfil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AC4B602E0C7AF600F562BE /* Perfil.swift */; };
+		60AC4B682E0C7AF600F562BE /* Estoque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AC4B612E0C7AF600F562BE /* Estoque.swift */; };
+		60AC4B692E0C7AF600F562BE /* PerfilVendedor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AC4B622E0C7AF600F562BE /* PerfilVendedor.swift */; };
+		60AC4B6A2E0C7AF600F562BE /* ListaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AC4B632E0C7AF600F562BE /* ListaView.swift */; };
 		6A8EBC1B2E0C345E0085C1AA /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8EBC1A2E0C34580085C1AA /* ViewModel.swift */; };
 		6A8EBC1D2E0C35C50085C1AA /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8EBC1C2E0C35C20085C1AA /* Model.swift */; };
 /* End PBXBuildFile section */
@@ -31,6 +38,13 @@
 		60A367602E09CEA5003C72BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		60A367632E09CEA5003C72BB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		60A3676A2E09D765003C72BB /* TelaInicial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelaInicial.swift; sourceTree = "<group>"; };
+		60AC4B5D2E0C7AF600F562BE /* PerfilVendendorAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerfilVendendorAPI.swift; sourceTree = "<group>"; };
+		60AC4B5E2E0C7AF600F562BE /* LogoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
+		60AC4B5F2E0C7AF600F562BE /* InicioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InicioView.swift; sourceTree = "<group>"; };
+		60AC4B602E0C7AF600F562BE /* Perfil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Perfil.swift; sourceTree = "<group>"; };
+		60AC4B612E0C7AF600F562BE /* Estoque.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Estoque.swift; sourceTree = "<group>"; };
+		60AC4B622E0C7AF600F562BE /* PerfilVendedor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerfilVendedor.swift; sourceTree = "<group>"; };
+		60AC4B632E0C7AF600F562BE /* ListaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListaView.swift; sourceTree = "<group>"; };
 		6A8EBC1A2E0C34580085C1AA /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		6A8EBC1C2E0C35C20085C1AA /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,6 +81,13 @@
 			children = (
 				6A8EBC1C2E0C35C20085C1AA /* Model.swift */,
 				6A8EBC1A2E0C34580085C1AA /* ViewModel.swift */,
+				60AC4B612E0C7AF600F562BE /* Estoque.swift */,
+				60AC4B5F2E0C7AF600F562BE /* InicioView.swift */,
+				60AC4B632E0C7AF600F562BE /* ListaView.swift */,
+				60AC4B5E2E0C7AF600F562BE /* LogoView.swift */,
+				60AC4B602E0C7AF600F562BE /* Perfil.swift */,
+				60AC4B622E0C7AF600F562BE /* PerfilVendedor.swift */,
+				60AC4B5D2E0C7AF600F562BE /* PerfilVendendorAPI.swift */,
 				60A3675C2E09CEA4003C72BB /* UnifoodApp.swift */,
 				60A3675E2E09CEA4003C72BB /* ContentView.swift */,
 				60A3676A2E09D765003C72BB /* TelaInicial.swift */,
@@ -159,14 +180,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A8EBC1D2E0C35C50085C1AA /* Model.swift in Sources */,
+				60AC4B662E0C7AF600F562BE /* InicioView.swift in Sources */,
+				60AC4B6A2E0C7AF600F562BE /* ListaView.swift in Sources */,
 				601C2AFC2E0B3EA500D41A1C /* ListaMarmiteiros.swift in Sources */,
+				60AC4B652E0C7AF600F562BE /* LogoView.swift in Sources */,
+				60AC4B672E0C7AF600F562BE /* Perfil.swift in Sources */,
 				60A3676B2E09D765003C72BB /* TelaInicial.swift in Sources */,
 				60A3675F2E09CEA4003C72BB /* ContentView.swift in Sources */,
 				60A3675D2E09CEA4003C72BB /* UnifoodApp.swift in Sources */,
+				60AC4B682E0C7AF600F562BE /* Estoque.swift in Sources */,
 				601C2AFE2E0B3FDE00D41A1C /* Cardapio.swift in Sources */,
+				60AC4B642E0C7AF600F562BE /* PerfilVendendorAPI.swift in Sources */,
 				601C2AFA2E0B3EA500D41A1C /* InformacoesMarmiteiros.swift in Sources */,
 				6A8EBC1B2E0C345E0085C1AA /* ViewModel.swift in Sources */,
 				601C2AF92E0B3EA500D41A1C /* MapaMarmiteiros.swift in Sources */,
+				60AC4B692E0C7AF600F562BE /* PerfilVendedor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
