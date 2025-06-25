@@ -8,6 +8,7 @@ struct Location: Hashable, Identifiable {
     let descricao: String
     let latitude: Double
     let longitude: Double
+    
 }
 
 struct MapaMarmiteiros: View {
@@ -19,10 +20,10 @@ struct MapaMarmiteiros: View {
     )
     
     @State private var searchText: String = ""
-    @State private var searchResults: [MKMapItem] = []
+    @State private var searchResults: [Location] = []
     @State private var selectedSearchItem: MKMapItem? = nil
     @State private var localSelecionado: Location? = nil
-    
+    @State private var selectedLocationId: Location.ID?
     @State var aux = Location(nome: "Restaurante Universitário", foto: "ru_foto", descricao: "O Restaurante Universitário da UnB oferece refeições a preços acessíveis para a comunidade acadêmica.", latitude: -15.76408, longitude: -47.87047)
     
     var locais = [
@@ -32,7 +33,7 @@ struct MapaMarmiteiros: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .top) {
-                Map(position: $position) {
+                Map(position: $position, selection: $selectedLocationId) {
                     ForEach(locais, id: \.self) { local in
                         Annotation(
                             local.nome,
@@ -46,11 +47,13 @@ struct MapaMarmiteiros: View {
                                     .foregroundColor(Color("base"))
                             }
                             .onTapGesture {
+                                self.zoomToLocation(CLLocationCoordinate2D(latitude: local.latitude, longitude: local.longitude))
                                 localSelecionado = local
                                 aux = local
                                 
                             }
                         }
+                        .tag(local.id)
                     }
                     
                     if let selectedItem = selectedSearchItem {
@@ -73,7 +76,7 @@ struct MapaMarmiteiros: View {
                             .shadow(radius: 10)
                             .frame(height: 0)
                             .onSubmit {
-                                performSearch()
+                                self.zoomToLocation(CLLocationCoordinate2D(latitude: aux.latitude, longitude: aux.longitude))
                             }
                     NavigationLink(destination: ListaMarmiteiros(auxRecebe: aux)){
                             Text("Exibir Lista")
@@ -92,24 +95,25 @@ struct MapaMarmiteiros: View {
                         Spacer()
                     
                     if !searchResults.isEmpty {
-                        List(searchResults, id: \.self) { item in
-                            VStack(alignment: .leading) {
-                                Text(item.name ?? "Local Desconhecido")
-                                if let address = item.placemark.title {
-                                    Text(address)
+                        VStack {
+                            ForEach(searchResults, id: \.id) { local in
+                                VStack(alignment: .leading) {
+                                    Text(aux.nome)
+                                        .font(.headline)
+                                    Text(aux.descricao)
                                         .font(.caption)
                                         .foregroundColor(.gray)
                                 }
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    self.localSelecionado = aux
+                                    self.zoomToLocation(CLLocationCoordinate2D(latitude: local.latitude, longitude: local.longitude))
+                                    self.searchResults = []
+                                }
                             }
-                            .onTapGesture {
-                                selectedSearchItem = item
-                                zoomToLocation(item.placemark.coordinate)
-                                searchResults = []
-                                searchText = item.name ?? ""
-                            }
+                            .listStyle(.plain)
                         }
-                        .frame(height: min(CGFloat(searchResults.count) * 60, 240))
-                        .listStyle(.plain)
+                        .frame(maxHeight: 240)
                         .background(Color(.systemBackground))
                         .cornerRadius(10)
                         .shadow(radius: 5)
@@ -124,31 +128,6 @@ struct MapaMarmiteiros: View {
         }
         .navigationTitle("Marmitas Próximas")
         .navigationBarTitleDisplayMode(.inline)
-    }
-    
-    func performSearch() {
-        let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = searchText
-        
-        let search = MKLocalSearch(request: request)
-        search.start { response, error in
-            guard let response = response else {
-                print("Erro na pesquisa: \(error?.localizedDescription ?? "Desconhecido")")
-                self.searchResults = []
-                self.selectedSearchItem = nil
-                return
-            }
-            
-            if let firstResult = response.mapItems.first {
-                self.selectedSearchItem = firstResult
-                self.zoomToLocation(firstResult.placemark.coordinate)
-                self.searchResults = []
-                self.searchText = firstResult.name ?? ""
-            } else {
-                self.searchResults = []
-                self.selectedSearchItem = nil
-            }
-        }
     }
     
     func zoomToLocation(_ coordinate: CLLocationCoordinate2D) {
