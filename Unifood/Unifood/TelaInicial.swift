@@ -1,121 +1,59 @@
 import SwiftUI
-import MapKit // Importe o MapKit para usar o mapa
+import MapKit
 
-// --- Modelos de Dados ---
-// Estrutura para representar um restaurante favorito
-struct FavoriteRestaurant: Identifiable {
-    let id = UUID()
-    let name: String
-    let iconName: String
-    let iconBgColor: Color
-    let rating: Double
-    let reviewCount: Int
-    let distance: Int
-}
+// MARK: - TELA INICIAL (PONTO DE PARTIDA)
 
-// Estrutura para representar uma notícia
-struct NewsItem: Identifiable {
-    let id = UUID()
-    let title: String
-    let imageName: String
-}
-
-// --- Dados de Exemplo ---
-// Vamos criar alguns dados de exemplo para preencher a tela
-struct MockData {
-    static let favoriteRestaurants = [
-        FavoriteRestaurant(name: "Sabor Mexicano", iconName: "face.smiling.inverse", iconBgColor: .red, rating: 4.8, reviewCount: 47, distance: 350),
-        FavoriteRestaurant(name: "Tendinha", iconName: "hamburger.fill", iconBgColor: .orange, rating: 4.7, reviewCount: 86, distance: 500),
-        FavoriteRestaurant(name: "Pizza Place", iconName: "pizza.fill", iconBgColor: .yellow, rating: 4.9, reviewCount: 120, distance: 800)
-    ]
-    
-    static let newsItems = [
-        NewsItem(title: "Descubra os novos pratos da semana", imageName: "plate.fill")
-    ]
-}
-
-
-// --- Tela Principal ---
 struct TelaInicial: View {
-    // Estado para controlar a posição da câmera do mapa
     @State private var cameraPosition: MapCameraPosition = .region(MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: -15.7633, longitude: -47.8722), // Coordenadas da UnB
+        center: CLLocationCoordinate2D(latitude: -15.7633, longitude: -47.8722), // UnB
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     ))
 
-    // Anotações para os locais no mapa
     let mapAnnotations = [
-        CLLocationCoordinate2D(latitude: -15.7645, longitude: -47.8725), // Restaurante
-        CLLocationCoordinate2D(latitude: -15.7620, longitude: -47.8715)  // Frangão Burguer
+        CLLocationCoordinate2D(latitude: -15.7645, longitude: -47.8725),
+        CLLocationCoordinate2D(latitude: -15.7620, longitude: -47.8715)
     ]
 
     var body: some View {
-        ZStack {
-            // Cor de fundo. Certifique-se de ter essa cor nos seus Assets.
-            Color("corDeFundo").ignoresSafeArea()
+        NavigationStack {
+            ZStack {
+                Color(UIColor.systemGray6).ignoresSafeArea()
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: 32) {
-                    RecentMealsCard()
-                    
-                    // A chamada agora inclui uma ação a ser executada no toque.
-                    NearbyPlacesSection(cameraPosition: $cameraPosition, annotations: mapAnnotations) {
-                        print("Seção do mapa foi tocada! Navegando para a tela cheia...")
-                        // É aqui que você adicionaria a lógica para abrir uma nova tela.
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 32) {
+                        RecentMealsCard()
+                        
+                        // 2. A seção do mapa agora é um link de navegação.
+                        NearbyPlacesSection(cameraPosition: $cameraPosition, annotations: mapAnnotations)
+                        
+                        FavoritesSection(restaurants: MockData.favoriteRestaurants)
+                        LatestNewsSection(newsItems: MockData.newsItems)
                     }
-                    
-                    FavoritesSection(restaurants: MockData.favoriteRestaurants)
-                    LatestNewsSection(newsItems: MockData.newsItems)
+                    .padding(.horizontal)
+                    .padding(.top)
                 }
-                .padding(.horizontal)
-                .padding(.top)
             }
+            .navigationBarHidden(true) // Opcional: esconde a barra de navegação padrão
         }
     }
 }
 
-// --- Componentes da Tela ---
 
-// Card 1: Suas refeições recentes
-struct RecentMealsCard: View {
-    var body: some View {
-        HStack(spacing: 8) {
-            VStack(alignment: .leading, spacing: 16) {
-                Text("Suas refeições recentes")
-                    .font(.title2).fontWeight(.bold).lineLimit(2)
 
-                Button(action: { print("Botão 'Ver' refeições pressionado") }) {
-                    Text("Ver")
-                        .fontWeight(.semibold).foregroundColor(.white)
-                        .padding(.vertical, 12).padding(.horizontal, 40)
-                        .background(Color.orange).cornerRadius(25)
-                }
-            }
-            .padding(.leading)
+// --- Componentes da Tela Inicial ---
 
-            Spacer()
-            
-            Image(systemName: "fork.knife")
-                .resizable().scaledToFit().frame(width: 80, height: 80)
-                .foregroundColor(.black).padding(.trailing, 20)
-        }
-        .frame(height: 160).background(Color.white).cornerRadius(20)
-        .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.black, lineWidth: 1.5))
-    }
-}
-
-// Seção 2: Marmitas mais próximas (Mapa) - AGORA É UM BOTÃO
+// Seção 2: Marmitas mais próximas (Mapa) - AGORA É UM NAVIGATIONLINK
 struct NearbyPlacesSection: View {
     @Binding var cameraPosition: MapCameraPosition
     let annotations: [CLLocationCoordinate2D]
-    var action: () -> Void // Ação a ser executada quando tocado
 
     var body: some View {
-        Button(action: action) { // Envolvemos todo o conteúdo em um Button
+        // 3. Em vez de um Button, usamos um NavigationLink.
+        NavigationLink(destination: MapaMarmiteiros()) {
             VStack(alignment: .leading, spacing: 16) {
                 Text("Marmitas mais próximas")
                     .font(.title).fontWeight(.bold)
-                    .foregroundColor(.black) // Garante que o texto não fique azul
+                    .foregroundColor(.black) // Garante que o texto permaneça preto
 
                 Map(position: $cameraPosition) {
                     ForEach(0..<annotations.count, id: \.self) { index in
@@ -123,27 +61,45 @@ struct NearbyPlacesSection: View {
                             .tint(.orange)
                     }
                 }
-                .allowsHitTesting(false) // Impede que o mapa capture os toques
+                .allowsHitTesting(false) // Impede que o mapa da tela inicial capture os toques
                 .frame(height: 200)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.black, lineWidth: 1.5) // Borda preta para consistência
+                        .stroke(Color.black, lineWidth: 1.5)
                 )
             }
         }
-        .buttonStyle(.plain) // Remove o estilo padrão do botão, mantendo sua aparência
+        .buttonStyle(.plain) // Remove o estilo padrão do link para não alterar a aparência
     }
 }
 
-// Seção 3: Seus favoritos
+// Outros componentes da Tela Inicial (sem alterações)
+struct RecentMealsCard: View {
+    var body: some View {
+        HStack(spacing: 8) {
+            VStack(alignment: .leading, spacing: 16) {
+                Text("Suas refeições recentes").font(.title2).fontWeight(.bold).lineLimit(2)
+                Button(action: { print("Botão 'Ver' pressionado") }) {
+                    Text("Ver").fontWeight(.semibold).foregroundColor(.white)
+                        .padding(.vertical, 12).padding(.horizontal, 40)
+                        .background(Color.orange).cornerRadius(25)
+                }
+            }.padding(.leading)
+            Spacer()
+            Image(systemName: "fork.knife").resizable().scaledToFit().frame(width: 80, height: 80)
+                .foregroundColor(.black).padding(.trailing, 20)
+        }
+        .frame(height: 160).background(Color.white).cornerRadius(20)
+        .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.black, lineWidth: 1.5))
+    }
+}
+
 struct FavoritesSection: View {
     let restaurants: [FavoriteRestaurant]
-
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Seus favoritos").font(.title).fontWeight(.bold)
-            
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
                     ForEach(restaurants) { restaurant in
@@ -155,19 +111,13 @@ struct FavoritesSection: View {
     }
 }
 
-// Card de um restaurante favorito
 struct FavoriteCardView: View {
     let restaurant: FavoriteRestaurant
-
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Image(systemName: restaurant.iconName)
-                .font(.title).foregroundColor(.white).padding()
+            Image(systemName: restaurant.iconName).font(.title).foregroundColor(.white).padding()
                 .background(restaurant.iconBgColor).clipShape(Circle())
-            
-            Text(restaurant.name)
-                .font(.headline).foregroundColor(.black)
-            
+            Text(restaurant.name).font(.headline).foregroundColor(.black)
             HStack(spacing: 4) {
                 Image(systemName: "star.fill").foregroundColor(.yellow)
                 Text("\(restaurant.rating, specifier: "%.1f")").fontWeight(.bold)
@@ -184,10 +134,8 @@ struct FavoriteCardView: View {
     }
 }
 
-// Seção 4: Últimas notícias
 struct LatestNewsSection: View {
     let newsItems: [NewsItem]
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Últimas notícias").font(.title).fontWeight(.bold)
@@ -196,10 +144,8 @@ struct LatestNewsSection: View {
     }
 }
 
-// Card de uma notícia
 struct NewsCardView: View {
     let newsItem: NewsItem
-    
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -213,6 +159,7 @@ struct NewsCardView: View {
         .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.black, lineWidth: 1.5))
     }
 }
+
 
 // --- Preview ---
 #Preview {
