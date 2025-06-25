@@ -1,16 +1,15 @@
 import SwiftUI
 
 struct InformacoesMarmiteiros: View {
-    let local: Location
     @Environment(\.dismiss) var dismiss
-    
+    @State var auxRecebe = Location(nome: "Restaurante Universitário", foto: "ru_foto", descricao: "O Restaurante Universitário da UnB oferece refeições a preços acessíveis para a comunidade acadêmica.", latitude: -15.76408, longitude: -47.87047)
     var body: some View {
         VStack(spacing: 20) {
             Image(systemName: "fork.knife.circle.fill")
                 .font(.system(size: 80))
                 .foregroundColor(Color("base"))
             
-            Text(local.nome)
+            Text(auxRecebe.nome)
                 .font(.largeTitle)
                 .fontWeight(.bold)
             
@@ -23,7 +22,7 @@ struct InformacoesMarmiteiros: View {
             }
             .foregroundColor(Color("base"))
             
-            Text(local.descricao)
+            Text(auxRecebe.descricao)
                 .font(.body)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
@@ -51,11 +50,5 @@ struct InformacoesMarmiteiros: View {
 }
 
 #Preview {
-    InformacoesMarmiteiros(local: Location(
-        nome: "Restaurante Universitário",
-        foto: "ru_foto",
-        descricao: "O Restaurante Universitário da UnB oferece refeições a preços acessíveis para a comunidade acadêmica.",
-        latitude: -15.76408,
-        longitude: -47.87047
-    ))
+    InformacoesMarmiteiros()
 }
