@@ -4,7 +4,7 @@ struct InicioView: View {
     @State private var action: Int? = nil     // controla a navegação
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 Image("mulher")
                     .resizable()
@@ -12,24 +12,27 @@ struct InicioView: View {
                 VStack {
                     HStack {
                         Image("logo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 150, height: 150)
                         Spacer()
                     }
                     .padding()
                     Text("Descubra a marmita mais\n próxima, disponibilidade,\n cardápio e muito mais!")
                         .font(.system(size: 20, weight: .bold))
                         .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                        .padding(.top)
+                        .padding(.horizontal)
 
                     Spacer()
-                    Text("Sua comida\n de forma rápida\n e fácil")
+                        .padding()
+                    Text("Sua comida\n de forma rápida e fácil")
                         .font(.system(size: 32, weight: .bold))
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
 
                     Spacer()
                     NavigationLink(
-                        destination: ContentView(),
+                        destination: TelaInicial(),
                         tag: 1,
                         selection: $action
                     ) { EmptyView() }
@@ -48,16 +51,17 @@ struct InicioView: View {
                     Spacer(minLength: 40)
                     NavigationLink(
                         destination: ContentView(),
-                        tag: 1,
+                        tag: 2,
                         selection: $action
                     ) { EmptyView() }
                     Button(action: {
-                        action = 1
+                        action = 2
                     }) {
                         Text("+ Adicionar Restaurante")
                             .font(.headline)
-
+                            .foregroundColor(.white)
                     }
+                    .padding(.bottom, 20)
                 }
             }
         }
