@@ -77,9 +77,10 @@ struct MapaMarmiteiros: View {
                             .frame(height: 0)
                             .onSubmit {
                                 self.zoomToLocation(CLLocationCoordinate2D(latitude: aux.latitude, longitude: aux.longitude))
+                                self.localSelecionado = aux
                             }
                     NavigationLink(destination: ListaMarmiteiros(auxRecebe: aux)){
-                            Text("Exibir Lista")
+                            Text("Exibir como Lista")
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 15)
@@ -143,4 +144,3 @@ struct MapaMarmiteiros: View {
 #Preview {
     MapaMarmiteiros()
 }
-
