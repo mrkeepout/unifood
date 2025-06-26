@@ -30,8 +30,11 @@ class ViewModel : ObservableObject {
             do {
                 let parsed = try JSONDecoder().decode([Restaurantes].self, from: data)
                 
+                let restaurantesValidos = parsed.filter { $0.nome != nil && !$0.nome!.isEmpty }
+                
+                // 3. Atualiza a UI na thread principal com os dados limpos.
                 DispatchQueue.main.async {
-                    self?.restaurantes = parsed
+                    self?.restaurantes = restaurantesValidos
                 }
             } catch {
                 print("Erro ao decodificar JSON: \(error)")

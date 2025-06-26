@@ -4,6 +4,9 @@ import MapKit
 // MARK: - TELA INICIAL (PONTO DE PARTIDA)
 
 struct TelaInicial: View {
+    
+    @StateObject private var viewModel = ViewModel()
+    
     @State private var cameraPosition: MapCameraPosition = .region(MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: -15.7633, longitude: -47.8722), // UnB
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
@@ -23,6 +26,8 @@ struct TelaInicial: View {
                     VStack(alignment: .leading, spacing: 32) {
                         RecentMealsCard()
                         
+                        LatestRestaurantsSection(restaurantes: viewModel.restaurantes)
+                        
                         // 2. A seção do mapa agora é um link de navegação.
                         NearbyPlacesSection(cameraPosition: $cameraPosition, annotations: mapAnnotations)
                         
@@ -34,6 +39,9 @@ struct TelaInicial: View {
                 }
             }
             .navigationBarHidden(true) // Opcional: esconde a barra de navegação padrão
+            .onAppear {
+                viewModel.fetch()
+            }
         }
     }
 }
@@ -74,6 +82,87 @@ struct NearbyPlacesSection: View {
 }
 
 // Outros componentes da Tela Inicial (sem alterações)
+
+struct LatestRestaurantsSection: View {
+    let restaurantes: [Restaurantes]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Adicionados Recentemente")
+                .font(.title).fontWeight(.bold)
+            
+            // Se não houver restaurantes, mostra uma mensagem.
+            if restaurantes.isEmpty {
+                Text("A carregar restaurantes ou nenhum encontrado...")
+                    .foregroundColor(.gray)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 16) {
+                        ForEach(restaurantes) { restaurante in
+                            // O card está agora dentro de um NavigationLink
+                            NavigationLink(value: restaurante) {
+                                LatestRestaurantCardView(restaurante: restaurante)
+                            }
+                            .buttonStyle(.plain) // Remove a formatação azul do link
+                        }
+                    }
+                }
+            }
+        }
+        // Define o destino da navegação para qualquer objeto do tipo Restaurante
+        .navigationDestination(for: Restaurantes.self) { restaurante in
+            // Aqui pode colocar a sua view de detalhes, por exemplo:
+            // RestauranteDetalheView(restaurante: restaurante)
+            Text("Página de Detalhes para: \(restaurante.nome ?? "Sem Nome")")
+        }
+    }
+}
+
+struct LatestRestaurantCardView: View {
+    let restaurante: Restaurantes
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            // Usa os helpers para converter Base64 e Hex
+            Image(uiImage: imageFromBase64(restaurante.imagemIcone ?? "") ?? UIImage(systemName: "photo.fill")!)
+                .resizable()
+                .scaledToFit()
+                .font(.title)
+                .foregroundColor(.white)
+                .padding()
+                .background(Color(hex: restaurante.corFundoIcone ?? "#CCCCCC"))
+                .clipShape(Circle())
+
+            Text(restaurante.nome ?? "Nome Indisponível")
+                .font(.headline)
+                .foregroundColor(.black)
+                .lineLimit(1)
+            
+            // Mostra a nota se existir
+            if let nota = restaurante.notaMedia {
+                HStack(spacing: 4) {
+                    Image(systemName: "star.fill").foregroundColor(.yellow)
+                    Text("\(nota, specifier: "%.1f")").fontWeight(.bold)
+                }
+            } else {
+                 Text("Sem avaliações")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+            
+            Spacer()
+        }
+        .padding()
+        .frame(width: 180, height: 180)
+        .background(Color.white)
+        .cornerRadius(20)
+        .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.black, lineWidth: 1.5))
+    }
+}
+
+
 struct RecentMealsCard: View {
     var body: some View {
         HStack(spacing: 8) {
