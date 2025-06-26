@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-// MARK: - Modelo para a tela inicial
+// MARK: - Modelo para a tela inicial - vai  ser excluida
 
 struct FavoriteRestaurant: Identifiable {
     let id = UUID()
@@ -21,16 +21,24 @@ struct NewsItem: Identifiable {
 
 struct MockData {
     static let favoriteRestaurants = [
-        FavoriteRestaurant(name: "Sabor Mexicano", iconName: "face.smiling.inverse", iconBgColor: .red, rating: 4.8, reviewCount: 47, distance: 350),
-        FavoriteRestaurant(name: "Tendinha", iconName: "hamburger.fill", iconBgColor: .orange, rating: 4.7, reviewCount: 86, distance: 500)
+        FavoriteRestaurant(name: "Sabor Mexicano",
+                           iconName: "face.smiling.inverse",
+                           iconBgColor: .red,
+                           rating: 4.8,
+                           reviewCount: 47,
+                           distance: 350),
+        FavoriteRestaurant(name: "Tendinha",
+                           iconName: "hamburger.fill",
+                           iconBgColor: .orange,
+                           rating: 4.7,
+                           reviewCount: 86,
+                           distance: 500)
     ]
     
     static let newsItems = [
         NewsItem(title: "Descubra os novos pratos da semana", imageName: "plate.fill")
     ]
 }
-
-
 
 
 // MARK: - Modelo para a lista de restaurantes (Endpoint /restaurantes)
@@ -41,9 +49,9 @@ struct Restaurantes: Codable, Identifiable {
     let nome: String
     let imagemIcone: String
     let corFundoIcone: String
-    let notaMedia: Double
-    let totalAvaliacoes: Int
-    let distanciaMetros: Int? // Opcional, caso não esteja disponível
+    let notaMedia: Double?
+    let totalAvaliacoes: Int?
+    let distanciaMetros: Int?
 
     // Mapeia os nomes do JSON (snake_case) para os nomes em Swift (camelCase)
     enum CodingKeys: String, CodingKey {

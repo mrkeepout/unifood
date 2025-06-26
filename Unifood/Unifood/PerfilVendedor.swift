@@ -37,6 +37,9 @@ struct ImagePicker: View {
 
 
 struct PerfilVendedor: View {
+    
+    @StateObject private var viewModel = ViewModel()
+    
     @State private var alergiaGluten = false
     @State private var intoleranciaLactose = false
     @State private var vegetariano = false
@@ -45,7 +48,38 @@ struct PerfilVendedor: View {
     @State private var nomeEstabelecimento: String = ""
     @State private var imagensEstabelecimento: [UIImage] = []
     
+    // 3. Estados para controle da UI (feedback)
+    @State private var isSaving = false // Para mostrar um indicador de loading
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    
     @State private var action: Int? = nil
+    
+    // MARK: --- FUNÇÃO PARA SALVAR ---
+    private func salvarRestaurante() {
+        // Validação simples na UI
+        guard !nomeEstabelecimento.trimmingCharacters(in: .whitespaces).isEmpty else {
+            alertMessage = "O nome do estabelecimento não pode ser vazio."
+            showAlert = true
+            return
+        }
+        
+        isSaving = true // Começa o processo de salvar
+        
+        viewModel.criarRestaurante(nome: nomeEstabelecimento, imagens: imagensEstabelecimento) { success, message in
+            isSaving = false // Termina o processo
+            alertMessage = message
+            showAlert = true
+            
+            if success {
+                // Opcional: Limpar o formulário ou navegar para outra tela após o sucesso.
+                nomeEstabelecimento = ""
+                imagensEstabelecimento.removeAll()
+            }
+        }
+    }
+    
+    // MARK: Inicio das view
     
     var body: some View {
         NavigationStack {
@@ -61,12 +95,15 @@ struct PerfilVendedor: View {
                                 .stroke(Color.black, lineWidth: 2)
                             
                             VStack(alignment: .leading, spacing: 16) {
+                                Text("Informações do Negócio")
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                
                                 TextField("Digite o nome do seu negócio...", text: $nomeEstabelecimento)
-                                    .font(.headline)
                                     .textFieldStyle(RoundedBorderTextFieldStyle())
                                 
-                                ImagePicker(selectedImages: $imagensEstabelecimento) // Usando ImagePicker aqui
-                                    .buttonStyle(.borderedProminent)
+                                ImagePicker(selectedImages: $imagensEstabelecimento)
+                                    .buttonStyle(.bordered)
                                 
                                 if !imagensEstabelecimento.isEmpty {
                                     ScrollView(.horizontal, showsIndicators: false) {
@@ -77,15 +114,34 @@ struct PerfilVendedor: View {
                                                     .scaledToFit()
                                                     .frame(maxHeight: 150)
                                                     .cornerRadius(8)
-                                                    .padding(.top, 8)
                                             }
                                         }
                                     }
                                 }
+                                
+                                // --- BOTÃO DE SALVAR ---
+                                if isSaving {
+                                    ProgressView("Salvando...")
+                                        .padding()
+                                } else {
+                                    Button(action: salvarRestaurante) {
+                                        Text("Salvar Restaurante")
+                                            .fontWeight(.semibold)
+                                            .frame(maxWidth: .infinity)
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                    .tint(.corBotoes)
+                                }
                             }
                             .padding()
-                        }
+
+                            
+                            
+                        }//zstack externa
+                        
+                        
                         .padding()
+                        
                         
                         VStack(spacing: 17) {
                             ZStack {
