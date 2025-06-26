@@ -81,12 +81,12 @@
 			children = (
 				6A8EBC1C2E0C35C20085C1AA /* Model.swift */,
 				6A8EBC1A2E0C34580085C1AA /* ViewModel.swift */,
-				60AC4B612E0C7AF600F562BE /* Estoque.swift */,
 				60AC4B5F2E0C7AF600F562BE /* InicioView.swift */,
 				60AC4B632E0C7AF600F562BE /* ListaView.swift */,
 				60AC4B5E2E0C7AF600F562BE /* LogoView.swift */,
 				60AC4B602E0C7AF600F562BE /* Perfil.swift */,
 				60AC4B622E0C7AF600F562BE /* PerfilVendedor.swift */,
+				60AC4B612E0C7AF600F562BE /* Estoque.swift */,
 				60AC4B5D2E0C7AF600F562BE /* PerfilVendendorAPI.swift */,
 				60A3675C2E09CEA4003C72BB /* UnifoodApp.swift */,
 				60A3675E2E09CEA4003C72BB /* ContentView.swift */,

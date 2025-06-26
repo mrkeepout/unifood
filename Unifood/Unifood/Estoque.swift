@@ -8,12 +8,19 @@
 import SwiftUI
 
 struct Estoque: View {
+    
+    @StateObject private var viewModel: EstoqueViewModel
+    
     @State private var nomePrato: String = ""
     @State private var quantidade: String = ""
     @State private var valorPrato: String = ""
     @State private var descricaoPrato: String = ""
     @State private var mostrarConfirmacao = false
-
+    
+    init(restaurante: Restaurantes){
+        _viewModel = StateObject(wrappedValue: EstoqueViewModel(restauranteId: restaurante.id, itensIniciais: restaurante.cardapio))
+    }
+    
     var body: some View {
         ZStack {
             Color.corFundo.ignoresSafeArea()
@@ -95,9 +102,26 @@ struct Estoque: View {
             }
             .navigationTitle("Adicionar Item")
             .navigationBarTitleDisplayMode(.inline)
+            
+            Section(header: Text("Cardápio Atual")) {
+                            if viewModel.itensCardapio.isEmpty {
+                                Text("Nenhum item no cardápio ainda.").foregroundColor(.gray)
+                            } else {
+                                ForEach(viewModel.itensCardapio) { item in
+                                    VStack(alignment: .leading) {
+                                        Text(item.nome).fontWeight(.bold)
+                                        Text(item.descricao).font(.caption).foregroundColor(.secondary)
+                                        Text("R$ \(item.preco, specifier: "%.2f")").foregroundColor(.accentColor)
+                                    }
+                                }
+                                .onDelete(perform: viewModel.removerItem)
+                            }
+                        }
         }
     }
 }
+
+
 
 struct CustomTextFieldStyle: ViewModifier {
     func body(content: Content) -> some View {

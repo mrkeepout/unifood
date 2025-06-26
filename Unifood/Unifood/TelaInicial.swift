@@ -4,6 +4,10 @@ import MapKit
 // MARK: - TELA INICIAL (PONTO DE PARTIDA)
 
 struct TelaInicial: View {
+    
+    // Chamar a ViewModel para rodar a API
+    @StateObject private var viewModel = ViewModel()
+    
     @State private var cameraPosition: MapCameraPosition = .region(MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: -15.7633, longitude: -47.8722), // UnB
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
@@ -14,6 +18,8 @@ struct TelaInicial: View {
         CLLocationCoordinate2D(latitude: -15.7620, longitude: -47.8715)
     ]
 
+    
+    // Elementos componentizados
     var body: some View {
         NavigationStack {
             ZStack {
@@ -23,10 +29,12 @@ struct TelaInicial: View {
                     VStack(alignment: .leading, spacing: 32) {
                         RecentMealsCard()
                         
-                        // 2. A seção do mapa agora é um link de navegação.
                         NearbyPlacesSection(cameraPosition: $cameraPosition, annotations: mapAnnotations)
                         
+                        LatestRestaurantsSection(restaurantes: viewModel.restaurantes)
+                        
                         FavoritesSection(restaurants: MockData.favoriteRestaurants)
+                        
                         LatestNewsSection(newsItems: MockData.newsItems)
                     }
                     .padding(.horizontal)
@@ -34,14 +42,36 @@ struct TelaInicial: View {
                 }
             }
             .navigationBarHidden(true) // Opcional: esconde a barra de navegação padrão
+            .onAppear{
+                viewModel.fetch()
+            }
         }
     }
 }
 
 
-// --- Componentes da Tela Inicial ---
+// MARK: --- Componentes da Tela Inicial ---
 
-// Seção 2: Marmitas mais próximas (Mapa) - AGORA É UM NAVIGATIONLINK
+struct RecentMealsCard: View {
+    var body: some View {
+        HStack(spacing: 8) {
+            VStack(alignment: .leading, spacing: 16) {
+                Text("Suas refeições recentes").font(.title2).fontWeight(.bold).lineLimit(2)
+                Button(action: { print("Botão 'Ver' pressionado") }) {
+                    Text("Ver").fontWeight(.semibold).foregroundColor(.white)
+                        .padding(.vertical, 12).padding(.horizontal, 40)
+                        .background(Color.orange).cornerRadius(25)
+                }
+            }.padding(.leading)
+            Spacer()
+            Image(systemName: "fork.knife").resizable().scaledToFit().frame(width: 80, height: 80)
+                .foregroundColor(.black).padding(.trailing, 20)
+        }
+        .frame(height: 160).background(Color.white).cornerRadius(20)
+        .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.black, lineWidth: 1.5))
+    }
+}
+
 struct NearbyPlacesSection: View {
     @Binding var cameraPosition: MapCameraPosition
     let annotations: [CLLocationCoordinate2D]
@@ -73,23 +103,82 @@ struct NearbyPlacesSection: View {
     }
 }
 
-// Outros componentes da Tela Inicial (sem alterações)
-struct RecentMealsCard: View {
+struct LatestRestaurantsSection: View {
+    let restaurantes: [Restaurantes]
+
     var body: some View {
-        HStack(spacing: 8) {
-            VStack(alignment: .leading, spacing: 16) {
-                Text("Suas refeições recentes").font(.title2).fontWeight(.bold).lineLimit(2)
-                Button(action: { print("Botão 'Ver' pressionado") }) {
-                    Text("Ver").fontWeight(.semibold).foregroundColor(.white)
-                        .padding(.vertical, 12).padding(.horizontal, 40)
-                        .background(Color.orange).cornerRadius(25)
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Adicionados Recentemente")
+                .font(.title).fontWeight(.bold)
+            
+            // Se não houver restaurantes, mostra uma mensagem.
+            if restaurantes.isEmpty {
+                Text("Nenhum restaurante novo encontrado.")
+                    .foregroundColor(.gray)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 16) {
+                        ForEach(restaurantes) { restaurante in
+                            LatestRestaurantCardView(restaurante: restaurante)
+                        }
+                    }
                 }
-            }.padding(.leading)
-            Spacer()
-            Image(systemName: "fork.knife").resizable().scaledToFit().frame(width: 80, height: 80)
-                .foregroundColor(.black).padding(.trailing, 20)
+            }
         }
-        .frame(height: 160).background(Color.white).cornerRadius(20)
+    }
+}
+
+struct LatestRestaurantCardView: View {
+    let restaurante: Restaurantes
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            // Usa os helpers para converter Base64 e Hex
+            Image(uiImage: imageFromBase64(restaurante.imagemIcone ?? "") ?? UIImage(systemName: "photo.fill")!)
+                .resizable()
+                .scaledToFit()
+                .font(.title)
+                .foregroundColor(.white)
+                .padding()
+                .background(Color(hex: restaurante.corFundoIcone ?? "#CCCCCC"))
+                .clipShape(Circle())
+
+            Text(restaurante.nome ?? "Nome Indisponível")
+                .font(.headline)
+                .foregroundColor(.black)
+                .lineLimit(1)
+            if let nota = restaurante.notaMedia, let avaliacoes = restaurante.totalAvaliacoes{
+                HStack(spacing: 4) {
+                    Image(systemName: "star.fill").foregroundColor(.yellow)
+                    Text("\(restaurante.notaMedia!, specifier: "%.1f")").fontWeight(.bold)
+                    /*Text("/ \(restaurante.totalAvaliacoes) avaliações")
+                     .font(.caption)
+                     .foregroundColor(.gray)
+                     */
+                }
+            } else{
+                Text("Sem avaliaçoes")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+            
+            Spacer()
+            
+            HStack {
+                Spacer()
+                // Mostra a distância se disponível
+                if let distancia = restaurante.distanciaMetros {
+                    Text("~ \(distancia)m")
+                        .font(.caption).fontWeight(.medium).foregroundColor(.gray)
+                }
+            }
+        }
+        .padding()
+        .frame(width: 180, height: 180)
+        .background(Color.white)
+        .cornerRadius(20)
         .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.black, lineWidth: 1.5))
     }
 }

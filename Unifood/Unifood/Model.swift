@@ -45,17 +45,19 @@ struct MockData {
 
 /// Representa um restaurante na lista principal. É uma versão resumida dos dados.
 struct Restaurantes: Codable, Identifiable {
-    let id: String
-    let nome: String
-    let imagemIcone: String
-    let corFundoIcone: String
+    var id: String { _id }
+    let _id: String
+    let nome: String?
+    let imagemIcone: String?
+    let corFundoIcone: String?
     let notaMedia: Double?
     let totalAvaliacoes: Int?
     let distanciaMetros: Int?
 
     // Mapeia os nomes do JSON (snake_case) para os nomes em Swift (camelCase)
     enum CodingKeys: String, CodingKey {
-        case id, nome
+        case _id
+        case nome
         case imagemIcone = "imagem_icone"
         case corFundoIcone = "cor_fundo_icone"
         case notaMedia = "nota_media"
@@ -189,5 +191,39 @@ struct NovoMenuItemPayload: Codable {
         case imagemPrato = "imagem_prato"
         case variacoes, descricao, preco
         case quantidadeDisponivel = "quantidade_disponivel"
+    }
+}
+
+
+// MARK: Helpers
+
+/// Converte uma string Base64 (com ou sem prefixo "data:image...") para UIImage.
+func imageFromBase64(_ base64String: String) -> UIImage? {
+    // Remove o prefixo "data:image/jpeg;base64," se existir
+    let cleanBase64 = base64String.components(separatedBy: ",").last ?? base64String
+    guard let data = Data(base64Encoded: cleanBase64, options: .ignoreUnknownCharacters) else {
+        return nil
+    }
+    return UIImage(data: data)
+}
+
+/// Permite criar uma cor a partir de um código hexadecimal (ex: "#FF5733").
+extension Color {
+    init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (255, 0, 0, 0) // Cor padrão em caso de erro
+        }
+        self.init(.sRGB, red: Double(r) / 255, green: Double(g) / 255, blue: Double(b) / 255, opacity: Double(a) / 255)
     }
 }
