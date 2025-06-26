@@ -32,7 +32,7 @@ struct InicioView: View {
 
                     Spacer()
                     NavigationLink(
-                        destination: TelaInicial(),
+                        destination: MainTabView(),
                         tag: 1,
                         selection: $action
                     ) { EmptyView() }

@@ -30,7 +30,6 @@ class ViewModel : ObservableObject {
                 print(error)
             }
         }
-        
         task.resume()
         
     }
