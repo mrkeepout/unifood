@@ -11,7 +11,7 @@ O UniFood é a solução definitiva para encontrar marmitas e lanches deliciosos
 
 ## 🎯 Sobre o Projeto
 
-A vida universitária é corrida. Entre aulas, estudos e projetos, encontrar uma refeição de qualidade, com preço justo e perto de você pode ser um desafio. Observando essa necessidade na comunidade da Universidade de Brasília, propusemos uma solução mobile (IOS) que centraliza a oferta de marmitas e lanches.
+A vida universitária é corrida. Entre aulas, estudos e projetos, encontrar uma refeição de qualidade, com preço justo e perto de você pode ser um desafio. Observando essa necessidade na comunidade da Universidade de Brasília, propusemos uma solução mobile (iOS) que centraliza a oferta de marmitas e lanches.
 
 O **UniFood** não é apenas um localizador, mas um ecossistema completo onde estudantes, professores e funcionários podem:
 1.  **Encontrar** vendedores de comida próximos através de um mapa interativo.
