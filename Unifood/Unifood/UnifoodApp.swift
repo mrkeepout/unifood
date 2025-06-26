@@ -11,12 +11,12 @@ import SwiftUI
 struct UnifoodApp: App {
     var body: some Scene {
         WindowGroup {
-            MainTabView()
+            LogoView()
         }
     }
 }
 
 #Preview {
-    MainTabView()
+    LogoView()
 }
 

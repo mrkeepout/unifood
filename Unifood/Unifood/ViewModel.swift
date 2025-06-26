@@ -7,12 +7,13 @@
 
 import Foundation
 import SwiftUI // Importar SwiftUI para acessar UIImage
+import MapKit
 
 class ViewModel : ObservableObject {
     @Published var restaurantes : [Restaurantes] = []
     
     // URL da sua API. Certifique-se de que esteja correta.
-    private let apiURL = "http://localhost:1880/restaurantes"
+    private let apiURL = "http://192.168.128.18:1880/restaurantes"
     
     // Função para buscar a lista de restaurantes (já existente)
     func fetch() {
@@ -101,3 +102,42 @@ class ViewModel : ObservableObject {
         }.resume()
     }
 }
+
+class MapViewModel: ObservableObject {
+    @Published var searchText: String = ""
+    @Published var searchResults: [MKMapItem] = []
+    
+    func searchPlaces() {
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = searchText
+        
+        let search = MKLocalSearch(request: request)
+        search.start { [weak self] response, error in
+            guard let response = response else {
+                print("Erro na busca do mapa: \(error?.localizedDescription ?? "Desconhecido")")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self?.searchResults = response.mapItems
+            }
+        }
+    }
+    
+    func clearSearchResults() {
+        searchResults = []
+        searchText = ""
+    }
+    
+    // Função helper para animar o zoom para uma coordenada
+    func zoomToLocation(_ coordinate: CLLocationCoordinate2D, position: Binding<MapCameraPosition>) {
+        withAnimation(.easeInOut(duration: 1.0)) {
+            position.wrappedValue = .region(MKCoordinateRegion(
+                center: coordinate,
+                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            ))
+        }
+    }
+}
+
+

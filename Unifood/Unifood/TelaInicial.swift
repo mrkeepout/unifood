@@ -39,7 +39,6 @@ struct TelaInicial: View {
                 }
             }
 
-            .navigationBarHidden(true) // Opcional: esconde a barra de navegação padrão
             .onAppear {
                 viewModel.fetch()
             }
