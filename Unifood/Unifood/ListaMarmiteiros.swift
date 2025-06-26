@@ -11,7 +11,6 @@ struct ListaMarmiteiros: View {
                     
                     Spacer()
                     Spacer()
-                    Spacer()
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack(spacing: 8) {
                             HStack{
