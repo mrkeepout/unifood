@@ -2,7 +2,14 @@ import SwiftUI
 
 struct InformacoesMarmiteiros: View {
     @Environment(\.dismiss) var dismiss
-    @State var auxRecebe = Location(nome: "Restaurante Universitário", foto: "ru_foto", descricao: "O Restaurante Universitário da UnB oferece refeições a preços acessíveis para a comunidade acadêmica.", latitude: -15.76408, longitude: -47.87047)
+    @State var auxRecebe = Location(
+        nome: "Restaurante Universitário",
+        foto: "ru_foto",
+        descricao: "O Restaurante Universitário da UnB oferece refeições a preços acessíveis para a comunidade acadêmica.",
+        latitude: -15.76408,
+        longitude: -47.87047
+    )
+    
     var body: some View {
         VStack(spacing: 20) {
             Image(systemName: "fork.knife.circle.fill")
@@ -13,11 +20,8 @@ struct InformacoesMarmiteiros: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
             
-            HStack(spacing: -1){
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
-                Image(systemName: "star.fill")
+            HStack(spacing: -1) {
+                ForEach(0..<4) { _ in Image(systemName: "star.fill") }
                 Image(systemName: "star.leadinghalf.filled")
             }
             .foregroundColor(Color("base"))
@@ -27,23 +31,23 @@ struct InformacoesMarmiteiros: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
             
-            
-            Button(action: {}) {
+            // LINK estilizado como botão
+            NavigationLink(destination: Cardapio()) {
                 Text("Exibir Cardápio")
                     .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color("base"))
+                    .foregroundColor(.white)
+                    .cornerRadius(12)
             }
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color("base"))
-            .foregroundColor(.white)
-            .cornerRadius(12)
             .padding()
             
-            Button(action: {}) {
-                Text("Ver avaliações")
-                    .font(.headline)
-                    .foregroundColor(Color("base"))
+            Button("Ver avaliações") {
+                print("Ir para avaliações")
             }
+            .font(.headline)
+            .foregroundColor(Color("base"))
         }
         .padding()
     }
