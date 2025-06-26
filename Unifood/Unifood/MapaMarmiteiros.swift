@@ -139,8 +139,10 @@ struct MapaMarmiteiros: View {
                 .padding()
             }
             .sheet(item: $localSelecionado) { local in
-                InformacoesMarmiteiros(auxRecebe: aux)
-                    .presentationDetents([.fraction(0.85), .large])
+                NavigationStack{
+                    InformacoesMarmiteiros(auxRecebe: aux)
+                        .presentationDetents([.fraction(0.85), .large])
+                }
             }
         }
         .navigationTitle("Marmitas Próximas")

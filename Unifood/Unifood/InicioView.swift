@@ -50,7 +50,7 @@ struct InicioView: View {
 
                     Spacer(minLength: 40)
                     NavigationLink(
-                        destination: ContentView(),
+                        destination: PerfilVendedor(),
                         tag: 2,
                         selection: $action
                     ) { EmptyView() }
