@@ -65,8 +65,8 @@ struct MapaMarmiteiros: View {
                 }
                 .ignoresSafeArea()
                 
-                VStack(spacing: 20) {
-                    Spacer()
+                VStack(spacing: 0) {
+                    HStack(spacing: 0) {
                         TextField("Pesquisar", text: $searchText)
                             .font(.headline)
                             .padding(10)
@@ -79,6 +79,22 @@ struct MapaMarmiteiros: View {
                                 self.zoomToLocation(CLLocationCoordinate2D(latitude: aux.latitude, longitude: aux.longitude))
                                 self.localSelecionado = aux
                             }
+                        Button(action: {
+                            self.zoomToLocation(CLLocationCoordinate2D(latitude: aux.latitude, longitude: aux.longitude))
+                            self.localSelecionado = aux
+                        }){
+                            Text("Buscar")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 15)
+                                .padding(.vertical, 10)
+                                .background(Color("base"))
+                                .cornerRadius(10)
+                        }
+                        Spacer()
+                        Spacer()
+                        Spacer()
+                    }
                     NavigationLink(destination: ListaMarmiteiros(auxRecebe: aux)){
                             Text("Exibir como Lista")
                                 .font(.headline)
