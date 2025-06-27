@@ -3,7 +3,7 @@ import SwiftUI
 
 // MARK: - Modelo para a tela inicial - vai  ser excluida
 
-struct FavoriteRestaurant: Identifiable {
+struct FavoriteRestaurant: Identifiable, Hashable {
     let id = UUID()
     let name: String
     let iconName: String

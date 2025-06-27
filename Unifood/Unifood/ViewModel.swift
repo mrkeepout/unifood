@@ -13,7 +13,8 @@ class ViewModel : ObservableObject {
     @Published var restaurantes : [Restaurantes] = []
     
     // URL da sua API. Certifique-se de que esteja correta.
-    private let apiURL = "http://192.168.128.18:1880/restaurantes"
+    //private let apiURL = "http://192.168.128.18:1880/restaurantes"
+    private let apiURL = "http://192.168.0.16:1880/restaurantes"
     
     // Função para buscar a lista de restaurantes (já existente)
     func fetch() {
