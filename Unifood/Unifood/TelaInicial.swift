@@ -47,9 +47,8 @@ struct TelaInicial: View {
 }
 
 
-// --- Componentes da Tela Inicial ---
+// MARK: --- Componentes da Tela Inicial ---
 
-// Seção 2: Marmitas mais próximas (Mapa) - AGORA É UM NAVIGATIONLINK
 struct NearbyPlacesSection: View {
     @Binding var cameraPosition: MapCameraPosition
     let annotations: [CLLocationCoordinate2D]
