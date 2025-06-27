@@ -22,9 +22,9 @@
 		60AC4B672E0C7AF600F562BE /* Perfil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AC4B602E0C7AF600F562BE /* Perfil.swift */; };
 		60AC4B682E0C7AF600F562BE /* Estoque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AC4B612E0C7AF600F562BE /* Estoque.swift */; };
 		60AC4B692E0C7AF600F562BE /* PerfilVendedor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AC4B622E0C7AF600F562BE /* PerfilVendedor.swift */; };
-		60AC4B6A2E0C7AF600F562BE /* ListaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AC4B632E0C7AF600F562BE /* ListaView.swift */; };
 		6A8EBC1B2E0C345E0085C1AA /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8EBC1A2E0C34580085C1AA /* ViewModel.swift */; };
 		6A8EBC1D2E0C35C50085C1AA /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8EBC1C2E0C35C20085C1AA /* Model.swift */; };
+		C0BB31762E0DCCB70058C013 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BB31752E0DCCB70058C013 /* MainTabView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,9 +44,9 @@
 		60AC4B602E0C7AF600F562BE /* Perfil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Perfil.swift; sourceTree = "<group>"; };
 		60AC4B612E0C7AF600F562BE /* Estoque.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Estoque.swift; sourceTree = "<group>"; };
 		60AC4B622E0C7AF600F562BE /* PerfilVendedor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerfilVendedor.swift; sourceTree = "<group>"; };
-		60AC4B632E0C7AF600F562BE /* ListaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListaView.swift; sourceTree = "<group>"; };
 		6A8EBC1A2E0C34580085C1AA /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		6A8EBC1C2E0C35C20085C1AA /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		C0BB31752E0DCCB70058C013 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,11 +79,11 @@
 		60A3675B2E09CEA4003C72BB /* Unifood */ = {
 			isa = PBXGroup;
 			children = (
+				C0BB31752E0DCCB70058C013 /* MainTabView.swift */,
 				6A8EBC1C2E0C35C20085C1AA /* Model.swift */,
 				6A8EBC1A2E0C34580085C1AA /* ViewModel.swift */,
 				60AC4B612E0C7AF600F562BE /* Estoque.swift */,
 				60AC4B5F2E0C7AF600F562BE /* InicioView.swift */,
-				60AC4B632E0C7AF600F562BE /* ListaView.swift */,
 				60AC4B5E2E0C7AF600F562BE /* LogoView.swift */,
 				60AC4B602E0C7AF600F562BE /* Perfil.swift */,
 				60AC4B622E0C7AF600F562BE /* PerfilVendedor.swift */,
@@ -181,8 +181,8 @@
 			files = (
 				6A8EBC1D2E0C35C50085C1AA /* Model.swift in Sources */,
 				60AC4B662E0C7AF600F562BE /* InicioView.swift in Sources */,
-				60AC4B6A2E0C7AF600F562BE /* ListaView.swift in Sources */,
 				601C2AFC2E0B3EA500D41A1C /* ListaMarmiteiros.swift in Sources */,
+				C0BB31762E0DCCB70058C013 /* MainTabView.swift in Sources */,
 				60AC4B652E0C7AF600F562BE /* LogoView.swift in Sources */,
 				60AC4B672E0C7AF600F562BE /* Perfil.swift in Sources */,
 				60A3676B2E09D765003C72BB /* TelaInicial.swift in Sources */,
@@ -328,6 +328,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Unifood/Preview Content\"";
+				DEVELOPMENT_TEAM = 64ML64678S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -356,6 +357,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Unifood/Preview Content\"";
+				DEVELOPMENT_TEAM = 64ML64678S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

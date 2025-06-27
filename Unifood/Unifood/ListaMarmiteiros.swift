@@ -5,55 +5,58 @@ struct ListaMarmiteiros: View {
     
     var body: some View {
         NavigationStack{
-            VStack(alignment: .leading, spacing: 16) {
-                
-                Spacer()
-                Spacer()
-                Spacer()
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: 8) {
-                        HStack{
-                            ZStack {
-                                Image(systemName: "fork.knife.circle.fill")
-                                    .font(.system(size: 70))
-                                    .foregroundColor(Color("base"))
-                                
-                            }
-                            VStack{
-                                Text(auxRecebe.nome)
-                                    .font(.headline)
-                                    .fontWeight(.bold)
-                                    .padding(.top, 8)
-                                Spacer()
-                                Text(auxRecebe.descricao)
-                                    .font(.caption)
-                                HStack{
+            ZStack{
+                Color(Color.corDeFundo).ignoresSafeArea()
+                VStack(alignment: .leading, spacing: 16) {
+                    
+                    Spacer()
+                    Spacer()
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack(spacing: 8) {
+                            HStack{
+                                ZStack {
+                                    Image(systemName: "fork.knife.circle.fill")
+                                        .font(.system(size: 70))
+                                        .foregroundColor(Color("base"))
                                     
-                                    HStack(spacing: 0){
+                                }
+                                VStack{
+                                    Text(auxRecebe.nome)
+                                        .font(.headline)
+                                        .fontWeight(.bold)
+                                        .padding(.top, 8)
+                                    Spacer()
+                                    Text(auxRecebe.descricao)
+                                        .font(.caption)
+                                    HStack{
                                         
-                                        Image(systemName: "star.fill")
-                                        Image(systemName: "star.fill")
-                                        Image(systemName: "star.fill")
-                                        Image(systemName: "star.fill")
-                                        Image(systemName: "star.leadinghalf.filled")
+                                        HStack(spacing: 0){
+                                            
+                                            Image(systemName: "star.fill")
+                                            Image(systemName: "star.fill")
+                                            Image(systemName: "star.fill")
+                                            Image(systemName: "star.fill")
+                                            Image(systemName: "star.leadinghalf.filled")
+                                            
+                                        }
                                         
+                                        .foregroundColor(Color("base"))
                                     }
                                     
-                                    .foregroundColor(Color("base"))
                                 }
                                 
                             }
-                            
                         }
+                        .padding()
+                        .frame(width: 340)
+                        .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(12)
                     }
-                    .padding()
-                    .frame(width: 340)
-                    .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(12)
                 }
             }
-        }
+            }
+        
         .navigationTitle("Lista de Marmiteiros")
         .navigationBarTitleDisplayMode(.inline)
         

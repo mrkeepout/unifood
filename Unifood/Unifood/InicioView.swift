@@ -32,7 +32,7 @@ struct InicioView: View {
 
                     Spacer()
                     NavigationLink(
-                        destination: TelaInicial(),
+                        destination: MainTabView(),
                         tag: 1,
                         selection: $action
                     ) { EmptyView() }
@@ -50,7 +50,7 @@ struct InicioView: View {
 
                     Spacer(minLength: 40)
                     NavigationLink(
-                        destination: ContentView(),
+                        destination: PerfilVendedor(),
                         tag: 2,
                         selection: $action
                     ) { EmptyView() }

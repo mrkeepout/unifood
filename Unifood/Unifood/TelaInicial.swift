@@ -38,7 +38,7 @@ struct TelaInicial: View {
                     .padding(.top)
                 }
             }
-            .navigationBarHidden(true) // Opcional: esconde a barra de navegação padrão
+
             .onAppear {
                 viewModel.fetch()
             }
@@ -165,22 +165,49 @@ struct LatestRestaurantCardView: View {
 struct RecentMealsCard: View {
     var body: some View {
         HStack(spacing: 8) {
+            // Coluna esquerda (título + botão)
             VStack(alignment: .leading, spacing: 16) {
-                Text("Suas refeições recentes").font(.title2).fontWeight(.bold).lineLimit(2)
-                Button(action: { print("Botão 'Ver' pressionado") }) {
-                    Text("Ver").fontWeight(.semibold).foregroundColor(.white)
-                        .padding(.vertical, 12).padding(.horizontal, 40)
-                        .background(Color.orange).cornerRadius(25)
+                Text("Restaurantes Adicionados")      // <- só texto agora
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .lineLimit(2)
+
+                // Botão laranja que leva para MapaMarmiteiros
+                NavigationLink(destination: ContentView()) {
+                    Text("Ver")
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 40)
+                        .background(Color.orange)
+                        .cornerRadius(25)
                 }
-            }.padding(.leading)
+                .buttonStyle(.plain)                 // mantém visual “puro”
+            }
+            .padding(.leading)
+
             Spacer()
-            Image(systemName: "fork.knife").resizable().scaledToFit().frame(width: 80, height: 80)
-                .foregroundColor(.black).padding(.trailing, 20)
+
+            // Ícone à direita
+            Image(systemName: "fork.knife")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 80, height: 80)
+                .foregroundColor(.black)
+                .padding(.trailing, 20)
         }
-        .frame(height: 160).background(Color.white).cornerRadius(20)
-        .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.black, lineWidth: 1.5))
+        .frame(height: 160)
+        .background(Color.white)
+        .cornerRadius(20)
+        .overlay(
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(Color.black, lineWidth: 1.5)
+        )
     }
 }
+
+
+
 
 struct FavoritesSection: View {
     let restaurants: [FavoriteRestaurant]
