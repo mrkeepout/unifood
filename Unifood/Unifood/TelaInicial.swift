@@ -2,21 +2,26 @@ import SwiftUI
 import MapKit
 
 // MARK: - TELA INICIAL (PONTO DE PARTIDA)
+// -- Tela construida usando os conceitos de componentização.
 
 struct TelaInicial: View {
     
+    // Import da ViewModel
     @StateObject private var viewModel = ViewModel()
     
+    // Configuracao do mapa "Locais Proximos" mostrando a UNB como exemplo
     @State private var cameraPosition: MapCameraPosition = .region(MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: -15.7633, longitude: -47.8722), // UnB
+        center: CLLocationCoordinate2D(latitude: -15.7633, longitude: -47.8722), // Coordenada da UnB
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     ))
 
+    // 2 restaurantes como exemplo
     let mapAnnotations = [
         CLLocationCoordinate2D(latitude: -15.7645, longitude: -47.8725),
         CLLocationCoordinate2D(latitude: -15.7620, longitude: -47.8715)
     ]
-
+    
+    // Componentizaçao dos cards
     var body: some View {
         NavigationStack {
             ZStack {
@@ -24,18 +29,24 @@ struct TelaInicial: View {
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 32) {
+                        //Cartao 1 - seus locais recentes
                         RecentMealsCard()
                         
+                        //Cartao 2 - ultimos locais adicionados
                         LatestRestaurantsSection(restaurantes: viewModel.restaurantes)
                         
-                        // 2. A seção do mapa agora é um link de navegação.
+                        //Cartao 3 - locais proximos
                         NearbyPlacesSection(cameraPosition: $cameraPosition, annotations: mapAnnotations)
                         
+                        //Cartao 4 - locais favoritos
                         FavoritesSection(restaurants: MockData.favoriteRestaurants)
+                        
+                        //Cartao 5 - ultimas noticias
                         LatestNewsSection(newsItems: MockData.newsItems)
                     }
                     .padding(.horizontal)
                     .padding(.top)
+                    .padding(.bottom)
                 }
             }
 
@@ -49,38 +60,49 @@ struct TelaInicial: View {
 
 // MARK: --- Componentes da Tela Inicial ---
 
-struct NearbyPlacesSection: View {
-    @Binding var cameraPosition: MapCameraPosition
-    let annotations: [CLLocationCoordinate2D]
-
+struct RecentMealsCard: View {
     var body: some View {
-        // 3. Em vez de um Button, usamos um NavigationLink.
-        NavigationLink(destination: MapaMarmiteiros()) {
+        HStack(spacing: 8) {
+            // Coluna esquerda (título + botão)
             VStack(alignment: .leading, spacing: 16) {
-                Text("Marmitas mais próximas")
-                    .font(.title).fontWeight(.bold)
-                    .foregroundColor(.black) // Garante que o texto permaneça preto
+                Text("Seus locais\nrecentes")      // <- só texto agora
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .lineLimit(2)
 
-                Map(position: $cameraPosition) {
-                    ForEach(0..<annotations.count, id: \.self) { index in
-                        Marker("Restaurante", systemImage: "fork.knife.circle.fill", coordinate: annotations[index])
-                            .tint(.orange)
-                    }
+                // Botão laranja que leva para MapaMarmiteiros
+                NavigationLink(destination: ContentView()) {
+                    Text("Ver")
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 40)
+                        .background(Color.orange)
+                        .cornerRadius(25)
                 }
-                .allowsHitTesting(false) // Impede que o mapa da tela inicial capture os toques
-                .frame(height: 200)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.black, lineWidth: 1.5)
-                )
+                .buttonStyle(.plain)                 // mantém visual “puro”
             }
+            .padding(.leading)
+
+            Spacer()
+
+            // Ícone à direita
+            Image(systemName: "fork.knife.circle")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 120, height: 120)
+                .foregroundColor(.black)
+                .padding(.trailing, 20)
         }
-        .buttonStyle(.plain) // Remove o estilo padrão do link para não alterar a aparência
+        .frame(height: 160)
+        .background(Color.white)
+        .cornerRadius(20)
+        .overlay(
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(Color.black, lineWidth: 1.5)
+        )
     }
 }
-
-// Outros componentes da Tela Inicial (sem alterações)
 
 struct LatestRestaurantsSection: View {
     let restaurantes: [Restaurantes]
@@ -114,7 +136,8 @@ struct LatestRestaurantsSection: View {
         .navigationDestination(for: Restaurantes.self) { restaurante in
             // Aqui pode colocar a sua view de detalhes, por exemplo:
             // RestauranteDetalheView(restaurante: restaurante)
-            Text("Página de Detalhes para: \(restaurante.nome ?? "Sem Nome")")
+            Text("Cardápio - \(restaurante.nome ?? "Sem Nome")")
+            Cardapio()
         }
     }
 }
@@ -161,53 +184,36 @@ struct LatestRestaurantCardView: View {
     }
 }
 
+struct NearbyPlacesSection: View {
+    @Binding var cameraPosition: MapCameraPosition
+    let annotations: [CLLocationCoordinate2D]
 
-struct RecentMealsCard: View {
     var body: some View {
-        HStack(spacing: 8) {
-            // Coluna esquerda (título + botão)
+        // 3. Em vez de um Button, usamos um NavigationLink.
+        NavigationLink(destination: MapaMarmiteiros()) {
             VStack(alignment: .leading, spacing: 16) {
-                Text("Restaurantes Adicionados")      // <- só texto agora
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .lineLimit(2)
+                Text("Locais próximos")
+                    .font(.title).fontWeight(.bold)
+                    .foregroundColor(.black) // Garante que o texto permaneça preto
 
-                // Botão laranja que leva para MapaMarmiteiros
-                NavigationLink(destination: ContentView()) {
-                    Text("Ver")
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 40)
-                        .background(Color.orange)
-                        .cornerRadius(25)
+                Map(position: $cameraPosition) {
+                    ForEach(0..<annotations.count, id: \.self) { index in
+                        Marker("Restaurante", systemImage: "fork.knife.circle.fill", coordinate: annotations[index])
+                            .tint(.orange)
+                    }
                 }
-                .buttonStyle(.plain)                 // mantém visual “puro”
+                .allowsHitTesting(false) // Impede que o mapa da tela inicial capture os toques
+                .frame(height: 200)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.black, lineWidth: 1.5)
+                )
             }
-            .padding(.leading)
-
-            Spacer()
-
-            // Ícone à direita
-            Image(systemName: "fork.knife")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 80, height: 80)
-                .foregroundColor(.black)
-                .padding(.trailing, 20)
         }
-        .frame(height: 160)
-        .background(Color.white)
-        .cornerRadius(20)
-        .overlay(
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(Color.black, lineWidth: 1.5)
-        )
+        .buttonStyle(.plain) // Remove o estilo padrão do link para não alterar a aparência
     }
 }
-
-
-
 
 struct FavoritesSection: View {
     let restaurants: [FavoriteRestaurant]
@@ -221,7 +227,15 @@ struct FavoritesSection: View {
                     }
                 }
             }
+        }//vstack
+        // Define o destino da navegação para qualquer objeto do tipo Restaurante
+        .navigationDestination(for: Restaurantes.self) { restaurants in
+            // Aqui pode colocar a sua view de detalhes, por exemplo:
+            // RestauranteDetalheView(restaurante: restaurante)
+            Text("Cardápio - \(restaurants.nome ?? "Sem Nome")")
+            Cardapio()
         }
+        
     }
 }
 
