@@ -49,11 +49,16 @@ struct TelaInicial: View {
                     .padding(.bottom)
                 }
             }
-
+            .navigationDestination(for: Restaurantes.self) { restaurante in
+                                Cardapio() // Navega para o cardápio ao clicar num restaurante da API
+                            }
+            .navigationDestination(for: FavoriteRestaurant.self) { restaurante in
+                                Cardapio() // Navega para o cardápio ao clicar num favorito
+                            }
             .onAppear {
                 viewModel.fetch()
             }
-        }
+        }//nav stack removido
     }
 }
 
@@ -133,14 +138,8 @@ struct LatestRestaurantsSection: View {
             }
         }
         // Define o destino da navegação para qualquer objeto do tipo Restaurante
-        .navigationDestination(for: Restaurantes.self) { restaurante in
-            // Aqui pode colocar a sua view de detalhes, por exemplo:
-            // RestauranteDetalheView(restaurante: restaurante)
-            Text("Cardápio - \(restaurante.nome ?? "Sem Nome")")
-            Cardapio()
         }
     }
-}
 
 struct LatestRestaurantCardView: View {
     let restaurante: Restaurantes
@@ -223,21 +222,18 @@ struct FavoritesSection: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
                     ForEach(restaurants) { restaurant in
-                        FavoriteCardView(restaurant: restaurant)
+                        NavigationLink(value: restaurant) {
+                            FavoriteCardView(restaurant: restaurant)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
             }
         }//vstack
         // Define o destino da navegação para qualquer objeto do tipo Restaurante
-        .navigationDestination(for: Restaurantes.self) { restaurants in
-            // Aqui pode colocar a sua view de detalhes, por exemplo:
-            // RestauranteDetalheView(restaurante: restaurante)
-            Text("Cardápio - \(restaurants.nome ?? "Sem Nome")")
-            Cardapio()
         }
         
     }
-}
 
 struct FavoriteCardView: View {
     let restaurant: FavoriteRestaurant
